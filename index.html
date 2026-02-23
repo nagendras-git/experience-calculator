@@ -25,23 +25,24 @@
   body { font-family: var(--font); background: var(--bg); min-height: 100vh; padding-bottom: 60px; }
 
   body.dark {
-    --bg: #1C1C1E; --card: #2C2C2E; --text1: #F2F2F7;
-    --text2: #98989F; --text3: #8E8E93; --div: #3A3A3C;
-    --blue: #0A84FF; --green: #30D158; --red: #FF453A;
+    --bg: #1C1C1E; --card: #2C2C2E;
+    --text1: #F2F2F7; --text2: #98989F; --text3: #8E8E93; --div: #3A3A3C;
+    --blue: #0A84FF; --green: #30D158; --red: #FF453A; --orange: #FF9F0A;
   }
   body.dark { background: #000; }
   body.dark .nav { background: rgba(28,28,30,0.96); }
+  body.dark .section { background: #1C1C1E; }
+  body.dark .section-toggle, body.dark .section-toggle-wrap { background: #2C2C2E; }
   body.dark .company-card { background: #2C2C2E; box-shadow: none; }
+  body.dark .snap-tile { background: #2C2C2E; box-shadow: none; }
   body.dark .date-chip { background: #3A3A3C; }
   body.dark .modal { background: #2C2C2E; }
   body.dark .fi { background: #3A3A3C; color: var(--text1); }
-  body.dark .seg-btn { background: #3A3A3C; color: var(--text2); }
-  body.dark .seg-btn.active { background: var(--card); color: var(--text1); }
-  body.dark .picker-row select { background: #3A3A3C; color: var(--text1); }
   body.dark .btn-cancel { background: #3A3A3C; color: var(--text1); }
   body.dark .present-chip { background: #0D3320; color: #30D158; }
+  body.dark .kn-row { border-bottom-color: var(--div); }
 
-  /* NAV */
+  /* ── NAV ── */
   .nav {
     position: sticky; top: 0; z-index: 100;
     background: rgba(242,242,247,0.96);
@@ -50,14 +51,16 @@
     border-bottom: 1px solid rgba(0,0,0,0.07);
   }
   .nav-inner { max-width: 480px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
-  .nav-title { font-size: 22px; font-weight: 800; color: var(--text1); letter-spacing: -0.4px; }
-  .nav-sub   { font-size: 11px; color: var(--text2); margin-top: 2px; }
-  .nav-right { display: flex; gap: 8px; align-items: center; }
-  .theme-btn {
+  .nav-title  { font-size: 22px; font-weight: 800; color: var(--text1); letter-spacing: -0.4px; }
+  .nav-sub    { font-size: 11px; color: var(--text2); margin-top: 2px; }
+  .nav-right  { display: flex; gap: 8px; align-items: center; }
+  .theme-btn  {
     background: var(--card); border: 1.5px solid var(--div);
     border-radius: 20px; width: 36px; height: 36px; font-size: 17px;
     cursor: pointer; display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
   }
+  .theme-btn:active { transform: scale(0.9); }
   .btn-add {
     background: var(--blue); color: white; border: none;
     border-radius: 20px; padding: 9px 18px;
@@ -65,68 +68,97 @@
   }
   .btn-add:active { opacity: 0.8; }
 
-  /* CONTENT */
+  /* ── CONTENT ── */
   .content { max-width: 480px; margin: 0 auto; padding: 14px 16px; }
 
-  /* STATS GRID */
-  .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
-  .stat-tile {
-    border-radius: 16px; padding: 16px;
-    display: flex; flex-direction: column; gap: 4px;
-  }
-  .stat-tile.blue   { background: var(--blue); }
-  .stat-tile.green  { background: var(--green); }
-  .stat-tile.purple { background: var(--purple); }
-  .stat-tile.orange { background: var(--orange); }
-  .stat-tile-lbl { font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.6); text-transform: uppercase; letter-spacing: 0.07em; }
-  .stat-tile-val { font-size: 26px; font-weight: 800; color: #FFFFFF; letter-spacing: -0.5px; line-height: 1.1; }
-  .stat-tile-sub { font-size: 11px; color: rgba(255,255,255,0.55); margin-top: 2px; }
-
-  /* SECTION TITLE */
-  .section-title {
-    font-size: 13px; font-weight: 700; color: var(--text2);
-    text-transform: uppercase; letter-spacing: 0.07em; margin: 18px 0 8px 2px;
-  }
-
-  /* COMPANY CARD */
-  .company-card {
-    background: var(--card); border-radius: 16px; margin-bottom: 10px;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.07), 0 0 0 1px rgba(0,0,0,0.04);
+  /* ── ACCORDION SECTION ── */
+  .section {
+    background: #F5F6FA; border-radius: 16px;
+    margin-bottom: 10px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.07);
     overflow: hidden;
   }
-  .company-header {
-    padding: 14px 14px 0;
+  .section-toggle-wrap { background: #FFFFFF; }
+  .section-toggle {
+    background: #FFFFFF; border: none;
+    padding: 15px 16px; cursor: pointer;
+    display: flex; align-items: center; gap: 10px;
+    font-family: var(--font); text-align: left; width: 100%;
+  }
+  .section-toggle:active { background: rgba(0,0,0,0.02); }
+  .section-emoji  { font-size: 18px; flex-shrink: 0; }
+  .section-label  { flex: 1; font-size: 16px; font-weight: 700; color: var(--text1); letter-spacing: -0.1px; }
+  .section-meta   { font-size: 13px; color: var(--text1); font-weight: 700; margin-right: 6px; flex-shrink: 0; }
+  .section-chevron { font-size: 12px; color: var(--text2); transition: transform 0.28s cubic-bezier(0.4,0,0.2,1); flex-shrink: 0; }
+  .section.open .section-chevron { transform: rotate(180deg); }
+  .section-body { max-height: 0; overflow: hidden; transition: max-height 0.35s cubic-bezier(0.4,0,0.2,1); }
+  .section.open .section-body { max-height: 4000px; }
+  .section-divider { height: 1px; background: var(--div); opacity: 0.6; }
+
+  /* ── SNAPSHOT TILES ── */
+  .snap-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; padding: 14px 16px; }
+  .snap-tile {
+    background: #FFFFFF; border-radius: 11px; padding: 12px 13px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.07), 0 0 0 1px rgba(0,0,0,0.04);
+  }
+  .snap-lbl { font-size: 12px; color: var(--text2); font-weight: 500; margin-bottom: 3px; }
+  .snap-val { font-size: 20px; font-weight: 800; color: var(--text1); letter-spacing: -0.3px; }
+  .snap-sub { font-size: 10px; color: var(--text2); margin-top: 2px; }
+
+  /* ── KEY NUMBERS ── */
+  .kn-wrap { padding: 4px 16px 14px; }
+  .kn-row {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 7px 0; border-bottom: 1px solid var(--div);
+  }
+  .kn-row:last-child { border-bottom: none; }
+  .kn-lbl { font-size: 14px; color: var(--text2); }
+  .kn-val { font-size: 14px; font-weight: 700; color: var(--text1); text-align: right; }
+
+  /* ── COMPANY CARD ── */
+  .company-card {
+    background: var(--card); margin: 8px 10px;
+    border-radius: 12px;
+    box-shadow: 0 1px 6px rgba(0,0,0,0.08), 0 0 0 1px rgba(0,0,0,0.04);
+    overflow: hidden;
+  }
+  .company-card:last-of-type { margin-bottom: 12px; }
+  .co-header {
+    padding: 12px 14px 0;
     display: flex; align-items: flex-start; justify-content: space-between; gap: 8px;
   }
-  .company-num { font-size: 10px; font-weight: 700; color: var(--text3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 2px; }
-  .company-name { font-size: 17px; font-weight: 700; color: var(--text1); }
-  .company-role { font-size: 13px; color: var(--text2); margin-top: 2px; }
-  .company-actions { display: flex; gap: 6px; }
+  .co-num  { font-size: 10px; font-weight: 700; color: var(--text3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 2px; }
+  .co-name { font-size: 17px; font-weight: 700; color: var(--text1); }
+  .co-role { font-size: 13px; color: var(--text2); margin-top: 2px; }
+  .co-actions { display: flex; gap: 6px; flex-shrink: 0; }
   .c-btn {
-    background: rgba(0,0,0,0.04); border: none; border-radius: 8px;
-    width: 30px; height: 30px; display: flex; align-items: center; justify-content: center;
-    cursor: pointer; font-size: 13px;
+    background: rgba(0,0,0,0.04); border: none; border-radius: 7px;
+    width: 30px; height: 30px; display: flex; align-items: center;
+    justify-content: center; cursor: pointer; font-size: 13px;
   }
   .c-btn.del { color: var(--red); font-size: 15px; }
   .c-btn:active { opacity: 0.6; }
-  .company-divider { height: 1px; background: var(--div); margin: 12px 14px 0; }
-  .company-body { padding: 10px 14px 14px; }
-  .company-dates { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
-  .date-chip { background: var(--bg); border-radius: 8px; padding: 5px 11px; font-size: 13px; font-weight: 600; color: var(--text1); }
-  .date-arrow { color: var(--text3); font-size: 14px; }
-  .present-chip { background: #D1FAE5; color: #065F46; border-radius: 8px; padding: 5px 11px; font-size: 13px; font-weight: 700; }
-  .duration-row { display: flex; align-items: center; gap: 10px; }
-  .dur-bar-wrap { flex: 1; height: 4px; background: var(--div); border-radius: 10px; overflow: hidden; }
-  .dur-bar { height: 100%; background: var(--blue); border-radius: 10px; }
-  .dur-text { font-size: 13px; font-weight: 700; color: var(--blue); min-width: 80px; text-align: right; }
+  .co-divider { height: 1px; background: var(--div); margin: 10px 14px 0; }
+  .co-body { padding: 10px 14px 14px; }
+  .co-dates { display: flex; align-items: center; gap: 8px; }
+  .date-chip { background: var(--bg); border-radius: 8px; padding: 5px 10px; font-size: 13px; font-weight: 600; color: var(--text1); }
+  .date-arrow { color: var(--text3); font-size: 13px; }
+  .present-chip { background: #D1FAE5; color: #065F46; border-radius: 8px; padding: 5px 10px; font-size: 13px; font-weight: 700; }
+  .dur-text { font-size: 14px; font-weight: 700; color: var(--text1); }
+
+  /* ADD ROW */
+  .add-row { padding: 4px 10px 12px; }
+  .btn-add-inline {
+    width: 100%; background: none; border: 1.5px dashed var(--div);
+    border-radius: 10px; padding: 9px; font-size: 13px; color: var(--blue);
+    font-weight: 600; font-family: var(--font); cursor: pointer;
+  }
+  .btn-add-inline:active { opacity: 0.7; }
 
   /* EMPTY */
-  .empty { text-align: center; padding: 60px 20px; }
-  .empty-icon { font-size: 52px; margin-bottom: 14px; }
-  .empty-title { font-size: 20px; font-weight: 700; color: var(--text1); margin-bottom: 6px; }
-  .empty-sub { font-size: 14px; color: var(--text2); line-height: 1.5; }
+  .empty { text-align: center; padding: 30px 20px; color: var(--text2); font-size: 13px; }
 
-  /* MODAL */
+  /* ── MODAL ── */
   .overlay {
     position: fixed; inset: 0; background: rgba(0,0,0,0.45);
     z-index: 200; display: none; align-items: flex-end; justify-content: center;
@@ -140,7 +172,7 @@
   }
   @keyframes up { from{transform:translateY(100%)} to{transform:translateY(0)} }
   .m-handle { width: 36px; height: 4px; background: var(--div); border-radius: 2px; margin: 0 auto 18px; }
-  .m-title { font-size: 20px; font-weight: 800; color: var(--text1); margin-bottom: 20px; letter-spacing: -0.3px; }
+  .m-title  { font-size: 20px; font-weight: 800; color: var(--text1); margin-bottom: 20px; letter-spacing: -0.3px; }
   .fg { margin-bottom: 14px; }
   .fl { font-size: 11px; font-weight: 700; color: var(--text2); text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 6px; display: block; }
   .fi {
@@ -149,23 +181,18 @@
     font-family: var(--font); color: var(--text1); outline: none; transition: border-color 0.2s;
   }
   .fi:focus { border-color: var(--blue); }
+  /* native date input — clean style */
+  input[type="date"].fi {
+    -webkit-appearance: none; appearance: none;
+    color: var(--text1);
+  }
+  input[type="date"].fi::-webkit-calendar-picker-indicator {
+    opacity: 0.5; cursor: pointer;
+    filter: none;
+  }
+  body.dark input[type="date"].fi::-webkit-calendar-picker-indicator { filter: invert(1); }
 
-  /* DATE PICKER ROW */
-  .picker-row {
-    display: flex; gap: 6px; align-items: center;
-    background: var(--bg); border-radius: 11px; padding: 6px 10px;
-    border: 1.5px solid transparent; transition: border-color 0.2s;
-  }
-  .picker-row:focus-within { border-color: var(--blue); }
-  .picker-row.disabled { opacity: 0.35; pointer-events: none; }
-  .picker-row select {
-    background: transparent; border: none; font-size: 14px; font-weight: 600;
-    font-family: var(--font); color: var(--text1); outline: none; cursor: pointer; padding: 6px 2px;
-  }
-  .picker-row select.day-sel  { width: 52px; }
-  .picker-row select.mon-sel  { flex: 1; }
-  .picker-row select.yr-sel   { width: 68px; }
-  .picker-sep { color: var(--div); font-size: 16px; }
+  .f2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 
   /* TOGGLE */
   .toggle-row { display: flex; align-items: center; gap: 12px; padding: 14px 0 6px; cursor: pointer; }
@@ -189,7 +216,7 @@
     opacity: 0; transition: all 0.25s; z-index: 300; white-space: nowrap;
   }
   .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
-  .toast.err { background: var(--red); }
+  .toast.err  { background: var(--red); }
 </style>
 </head>
 <body>
@@ -207,40 +234,13 @@
   </div>
 </div>
 
-<div class="content">
-  <div class="stats-grid" id="stats-grid">
-    <div class="stat-tile blue">
-      <div class="stat-tile-lbl">Total Experience</div>
-      <div class="stat-tile-val" id="s-total">0y</div>
-      <div class="stat-tile-sub" id="s-exact">— exact</div>
-    </div>
-    <div class="stat-tile green">
-      <div class="stat-tile-lbl">Companies</div>
-      <div class="stat-tile-val" id="s-cos">0</div>
-      <div class="stat-tile-sub">worked at</div>
-    </div>
-    <div class="stat-tile purple">
-      <div class="stat-tile-lbl">Current Role</div>
-      <div class="stat-tile-val" style="font-size:16px;margin-top:4px" id="s-cur">—</div>
-      <div class="stat-tile-sub" id="s-cur-role">—</div>
-    </div>
-    <div class="stat-tile orange">
-      <div class="stat-tile-lbl">Longest Stint</div>
-      <div class="stat-tile-val" style="font-size:16px;margin-top:4px" id="s-long">—</div>
-      <div class="stat-tile-sub" id="s-long-dur">—</div>
-    </div>
-  </div>
-
-  <div class="section-title">Work History</div>
-  <div id="list"></div>
-</div>
+<div class="content" id="main-content"></div>
 
 <!-- MODAL -->
 <div class="overlay" id="m-co" onclick="overlayClose(event)">
   <div class="modal">
     <div class="m-handle"></div>
     <div class="m-title" id="m-title">Add Company</div>
-
     <div class="fg">
       <label class="fl">Company Name</label>
       <input class="fi" id="f-name" placeholder="e.g. Infosys, TCS, Google"/>
@@ -249,35 +249,20 @@
       <label class="fl">Role / Designation</label>
       <input class="fi" id="f-role" placeholder="e.g. Senior Software Engineer"/>
     </div>
-
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px">
-      <div>
+    <div class="f2">
+      <div class="fg">
         <label class="fl">Start Date</label>
-        <div class="picker-row" id="start-picker">
-          <select class="day-sel" id="f-sd"></select>
-          <span class="picker-sep">·</span>
-          <select class="mon-sel" id="f-sm"></select>
-          <span class="picker-sep">·</span>
-          <select class="yr-sel"  id="f-sy"></select>
-        </div>
+        <input class="fi" id="f-start" type="date"/>
       </div>
-      <div>
+      <div class="fg" id="end-fg">
         <label class="fl">End Date</label>
-        <div class="picker-row" id="end-picker">
-          <select class="day-sel" id="f-ed"></select>
-          <span class="picker-sep">·</span>
-          <select class="mon-sel" id="f-em"></select>
-          <span class="picker-sep">·</span>
-          <select class="yr-sel"  id="f-ey"></select>
-        </div>
+        <input class="fi" id="f-end" type="date"/>
       </div>
     </div>
-
     <div class="toggle-row" onclick="toggleCurrent()">
       <div class="sw" id="sw"><div class="sw-knob"></div></div>
       <span class="toggle-lbl">Currently working here</span>
     </div>
-
     <div class="m-actions">
       <button class="btn-cancel" onclick="closeModal()">Cancel</button>
       <button class="btn-save"   onclick="saveCompany()">Save</button>
@@ -289,167 +274,124 @@
 
 <script>
 const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-const MONTHS_FULL = ['January','February','March','April','May','June','July','August','September','October','November','December'];
 
-let companies = JSON.parse(localStorage.getItem('exp2') || '[]');
-let editingId = null;
-let isCurrent = false;
+let companies  = JSON.parse(localStorage.getItem('exp3') || '[]');
+let openSecs   = new Set(['summary','history']);
+let editingId  = null;
+let isCurrent  = false;
 
-// ── POPULATE SELECTS ──────────────────────────────────────────────────────
-function daysInMonth(m, y) {
-  if (!m || !y) return 31;
-  return new Date(y, m, 0).getDate();
-}
-
-function buildDays(selId, month, year, selected) {
-  const sel = document.getElementById(selId);
-  const max = daysInMonth(month, year);
-  sel.innerHTML = '<option value="">Day</option>';
-  for (let d = 1; d <= max; d++) {
-    sel.innerHTML += `<option value="${d}" ${d==selected?'selected':''}>${d}</option>`;
-  }
-}
-
-function buildMonths(selId, selected) {
-  const sel = document.getElementById(selId);
-  sel.innerHTML = '<option value="">Mon</option>';
-  MONTHS.forEach((m, i) => {
-    sel.innerHTML += `<option value="${i+1}" ${(i+1)==selected?'selected':''}>${m}</option>`;
-  });
-}
-
-function buildYears(selId, selected) {
-  const sel = document.getElementById(selId);
-  const now = new Date().getFullYear();
-  sel.innerHTML = '<option value="">Year</option>';
-  for (let y = now; y >= 1980; y--) {
-    sel.innerHTML += `<option value="${y}" ${y==selected?'selected':''}>${y}</option>`;
-  }
-}
-
-function initPickers() {
-  buildDays('f-sd', '', '', ''); buildMonths('f-sm', ''); buildYears('f-sy', '');
-  buildDays('f-ed', '', '', ''); buildMonths('f-em', ''); buildYears('f-ey', '');
-
-  // Refresh days when month/year changes
-  ['f-sm','f-sy'].forEach(id => {
-    document.getElementById(id).addEventListener('change', () => {
-      const m = document.getElementById('f-sm').value;
-      const y = document.getElementById('f-sy').value;
-      const cur = document.getElementById('f-sd').value;
-      buildDays('f-sd', m, y, cur);
-    });
-  });
-  ['f-em','f-ey'].forEach(id => {
-    document.getElementById(id).addEventListener('change', () => {
-      const m = document.getElementById('f-em').value;
-      const y = document.getElementById('f-ey').value;
-      const cur = document.getElementById('f-ed').value;
-      buildDays('f-ed', m, y, cur);
-    });
-  });
-}
-
-function setDate(prefix, dateStr) {
-  // dateStr = "YYYY-MM-DD"
-  if (dateStr) {
-    const [y, m, d] = dateStr.split('-').map(Number);
-    buildDays(`${prefix}d`, m, y, d);
-    buildMonths(`${prefix}m`, m);
-    buildYears(`${prefix}y`, y);
-    document.getElementById(`${prefix}d`).value = d;
-    document.getElementById(`${prefix}m`).value = m;
-    document.getElementById(`${prefix}y`).value = y;
-  } else {
-    buildDays(`${prefix}d`, '', '', '');
-    buildMonths(`${prefix}m`, '');
-    buildYears(`${prefix}y`, '');
-  }
-}
-
-function getDate(prefix) {
-  const d = document.getElementById(`${prefix}d`).value;
-  const m = document.getElementById(`${prefix}m`).value;
-  const y = document.getElementById(`${prefix}y`).value;
-  if (!d || !m || !y) return '';
-  return `${y}-${String(m).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
-}
-
-// ── DURATION CALC ─────────────────────────────────────────────────────────
+// ── HELPERS ───────────────────────────────────────────────────────────────
 function calcDuration(start, end) {
   const s = new Date(start);
   const e = end ? new Date(end) : new Date();
   let months = (e.getFullYear() - s.getFullYear()) * 12 + (e.getMonth() - s.getMonth());
-  const days = e.getDate() - s.getDate();
-  if (days < 0) months--;
+  if (e.getDate() < s.getDate()) months--;
   if (months < 0) months = 0;
-  return { months, years: Math.floor(months/12), rem: months % 12 };
+  return { months, years: Math.floor(months / 12), rem: months % 12 };
 }
 
-function fmt(years, rem) {
-  if (years === 0 && rem === 0) return '< 1m';
-  if (years === 0) return `${rem}m`;
-  if (rem === 0)   return `${years}y`;
-  return `${years}y ${rem}m`;
+function fmt(y, r) {
+  if (y === 0 && r === 0) return '0 months';
+  if (y === 0) return `${r}m`;
+  if (r === 0) return `${y}y`;
+  return `${y}y ${r}m`;
 }
 
-function fmtDate(dateStr) {
-  if (!dateStr) return '';
-  const [y, m, d] = dateStr.split('-').map(Number);
-  return `${d} ${MONTHS[m-1]} ${y}`;
+function fmtDate(d) {
+  if (!d) return '';
+  const [yr, mo, dy] = d.split('-');
+  return `${parseInt(dy)} ${MONTHS[parseInt(mo)-1]} ${yr}`;
 }
 
 // ── RENDER ────────────────────────────────────────────────────────────────
-function renderAll() {
-  const list = document.getElementById('list');
+function toggleSec(id) {
+  openSecs.has(id) ? openSecs.delete(id) : openSecs.add(id);
+  renderAll();
+}
 
-  if (companies.length === 0) {
-    list.innerHTML = `
-      <div class="empty">
-        <div class="empty-icon">🏢</div>
-        <div class="empty-title">No companies yet</div>
-        <div class="empty-sub">Tap "Add Company" to start<br>building your career timeline</div>
-      </div>`;
-    document.getElementById('s-total').textContent = '0y';
-    document.getElementById('s-exact').textContent = '—';
-    document.getElementById('s-cos').textContent = '0';
-    document.getElementById('s-cur').textContent = '—';
-    document.getElementById('s-cur-role').textContent = '—';
-    document.getElementById('s-long').textContent = '—';
-    document.getElementById('s-long-dur').textContent = '—';
-    return;
-  }
+function renderSection({ id, emoji, label, meta, body }) {
+  const open = openSecs.has(id);
+  return `
+  <div class="section ${open ? 'open' : ''}" id="sec-${id}">
+    <div class="section-toggle-wrap">
+      <button class="section-toggle" onclick="toggleSec('${id}')">
+        <span class="section-emoji">${emoji}</span>
+        <span class="section-label">${label}</span>
+        <span class="section-meta">${meta}</span>
+        <span class="section-chevron">▼</span>
+      </button>
+    </div>
+    <div class="section-body">
+      <div class="section-divider"></div>
+      ${body}
+    </div>
+  </div>`;
+}
 
+function renderSummaryBody() {
   const sorted = [...companies].sort((a,b) => a.start.localeCompare(b.start));
   const durations = sorted.map(c => calcDuration(c.start, c.current ? null : c.end));
-  const maxMonths = Math.max(...durations.map(d => d.months), 1);
   const totalMonths = durations.reduce((s,d) => s + d.months, 0);
-  const totY = Math.floor(totalMonths/12), totR = totalMonths % 12;
+  const totY = Math.floor(totalMonths / 12), totR = totalMonths % 12;
   const curCo = sorted.find(c => c.current);
-  const longest = sorted.reduce((best, c, i) => durations[i].months > (best ? calcDuration(best.start, best.current?null:best.end).months : 0) ? c : best, null);
+  const longest = sorted.reduce((best, c, i) =>
+    (!best || durations[i].months > calcDuration(best.start, best.current ? null : best.end).months) ? c : best, null);
   const longDur = longest ? calcDuration(longest.start, longest.current ? null : longest.end) : null;
 
-  // Stats
-  document.getElementById('s-total').textContent = totY > 0 ? `${totY}y ${totR>0?totR+'m':''}` : `${totR}m`;
-  document.getElementById('s-exact').textContent = fmt(totY, totR) + ' total';
-  document.getElementById('s-cos').textContent = sorted.length;
-  document.getElementById('s-cur').textContent = curCo ? curCo.name : '—';
-  document.getElementById('s-cur-role').textContent = curCo ? (curCo.role || 'Current') : '—';
-  document.getElementById('s-long').textContent = longest ? longest.name : '—';
-  document.getElementById('s-long-dur').textContent = longDur ? fmt(longDur.years, longDur.rem) : '—';
+  return `
+  <div class="snap-grid">
+    <div class="snap-tile">
+      <div class="snap-lbl">Total Experience</div>
+      <div class="snap-val">${fmt(totY, totR)}</div>
+      <div class="snap-sub">${totalMonths} months</div>
+    </div>
+    <div class="snap-tile">
+      <div class="snap-lbl">Companies</div>
+      <div class="snap-val">${companies.length}</div>
+      <div class="snap-sub">worked at</div>
+    </div>
+  </div>
+  <div class="kn-wrap">
+    <div class="kn-row">
+      <span class="kn-lbl">Current Company</span>
+      <span class="kn-val">${curCo ? curCo.name : '—'}</span>
+    </div>
+    <div class="kn-row">
+      <span class="kn-lbl">Current Role</span>
+      <span class="kn-val">${curCo ? (curCo.role || '—') : '—'}</span>
+    </div>
+    <div class="kn-row">
+      <span class="kn-lbl">Longest Tenure</span>
+      <span class="kn-val">${longest ? longest.name : '—'}</span>
+    </div>
+    <div class="kn-row">
+      <span class="kn-lbl">Longest Duration</span>
+      <span class="kn-val">${longDur ? fmt(longDur.years, longDur.rem) : '—'}</span>
+    </div>
+  </div>`;
+}
 
-  list.innerHTML = sorted.map((c, i) => {
-    const d   = durations[i];
-    const pct = Math.max(6, Math.round((d.months / maxMonths) * 100));
+function renderHistoryBody() {
+  if (companies.length === 0) {
+    return `<div class="empty">No companies yet — tap Add Company to get started</div>`;
+  }
+
+  // Sort newest first (descending)
+  const sorted = [...companies].sort((a,b) => b.start.localeCompare(a.start));
+  const allDurs = sorted.map(c => calcDuration(c.start, c.current ? null : c.end));
+
+  return sorted.map((c, i) => {
+    const d   = allDurs[i];
+    const num = companies.length - i; // highest number = most recent
     return `
     <div class="company-card">
-      <div class="company-header">
+      <div class="co-header">
         <div>
-          <div class="company-num">Company ${i+1}</div>
-          <div class="company-name">${c.name}</div>
-          ${c.role ? `<div class="company-role">${c.role}</div>` : ''}
+          <div class="co-num">Company ${num}</div>
+          <div class="co-name">${c.name}</div>
+          ${c.role ? `<div class="co-role">${c.role}</div>` : ''}
         </div>
-        <div class="company-actions">
+        <div class="co-actions">
           <button class="c-btn" onclick="openEdit('${c.id}')">✏️</button>
           <button class="c-btn del" onclick="delCo('${c.id}')">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
@@ -461,33 +403,75 @@ function renderAll() {
           </button>
         </div>
       </div>
-      <div class="company-divider"></div>
-      <div class="company-body">
-        <div class="company-dates">
+      <div class="co-divider"></div>
+      <div class="co-body">
+        <div class="co-dates">
           <div class="date-chip">${fmtDate(c.start)}</div>
           <div class="date-arrow">→</div>
           ${c.current
             ? `<div class="present-chip">Present ✦</div>`
             : `<div class="date-chip">${fmtDate(c.end)}</div>`}
-        </div>
-        <div class="duration-row">
-          <div class="dur-bar-wrap"><div class="dur-bar" style="width:${pct}%"></div></div>
+          <div style="flex:1"></div>
           <div class="dur-text">${fmt(d.years, d.rem)}</div>
         </div>
       </div>
     </div>`;
-  }).join('');
+  }).join('') + `
+  <div class="add-row">
+    <button class="btn-add-inline" onclick="openAdd()">Add Company</button>
+  </div>`;
+}
+
+function renderAll() {
+  const sorted = [...companies].sort((a,b) => a.start.localeCompare(b.start));
+  const durations = sorted.map(c => calcDuration(c.start, c.current ? null : c.end));
+  const totalMonths = durations.reduce((s,d) => s + d.months, 0);
+  const totY = Math.floor(totalMonths / 12), totR = totalMonths % 12;
+
+  let html = '';
+
+  // Only show Summary when there is at least one company
+  if (companies.length > 0) {
+    html += renderSection({
+      id: 'summary', emoji: '📊', label: 'Summary',
+      meta: fmt(totY, totR),
+      body: renderSummaryBody()
+    });
+  }
+
+  // Only show Work History when there is at least one company
+  if (companies.length > 0) {
+    html += renderSection({
+      id: 'history', emoji: '🏢', label: 'Work History',
+      meta: `${companies.length} compan${companies.length === 1 ? 'y' : 'ies'}`,
+      body: renderHistoryBody()
+    });
+  }
+
+  // Empty state when no companies at all
+  if (companies.length === 0) {
+    html += `
+    <div style="text-align:center;padding:70px 20px">
+      <div style="font-size:52px;margin-bottom:14px">🏢</div>
+      <div style="font-size:20px;font-weight:700;color:var(--text1);margin-bottom:8px">No companies yet</div>
+      <div style="font-size:14px;color:var(--text2);line-height:1.5;margin-bottom:24px">Tap "Add Company" to start<br>building your career timeline</div>
+    </div>`;
+  }
+
+  document.getElementById('main-content').innerHTML = html;
 }
 
 // ── MODAL ─────────────────────────────────────────────────────────────────
 function openAdd() {
   editingId = null; isCurrent = false;
   document.getElementById('m-title').textContent = 'Add Company';
-  document.getElementById('f-name').value = '';
-  document.getElementById('f-role').value = '';
-  setDate('f-s', ''); setDate('f-e', '');
+  document.getElementById('f-name').value  = '';
+  document.getElementById('f-role').value  = '';
+  document.getElementById('f-start').value = '';
+  document.getElementById('f-end').value   = '';
+  document.getElementById('f-end').disabled = false;
+  document.getElementById('end-fg').style.opacity = '1';
   document.getElementById('sw').classList.remove('on');
-  document.getElementById('end-picker').classList.remove('disabled');
   document.getElementById('m-co').classList.add('open');
   document.body.style.overflow = 'hidden';
 }
@@ -497,13 +481,14 @@ function openEdit(id) {
   const c = companies.find(x => x.id === id);
   if (!c) return;
   isCurrent = c.current || false;
-  document.getElementById('m-title').textContent = 'Edit Company';
-  document.getElementById('f-name').value = c.name;
-  document.getElementById('f-role').value = c.role || '';
-  setDate('f-s', c.start);
-  setDate('f-e', c.end || '');
+  document.getElementById('m-title').textContent    = 'Edit Company';
+  document.getElementById('f-name').value           = c.name;
+  document.getElementById('f-role').value           = c.role || '';
+  document.getElementById('f-start').value          = c.start;
+  document.getElementById('f-end').value            = c.end || '';
+  document.getElementById('f-end').disabled         = isCurrent;
+  document.getElementById('end-fg').style.opacity   = isCurrent ? '0.4' : '1';
   document.getElementById('sw').classList.toggle('on', isCurrent);
-  document.getElementById('end-picker').classList.toggle('disabled', isCurrent);
   document.getElementById('m-co').classList.add('open');
   document.body.style.overflow = 'hidden';
 }
@@ -517,15 +502,16 @@ function overlayClose(e) { if (e.target === document.getElementById('m-co')) clo
 function toggleCurrent() {
   isCurrent = !isCurrent;
   document.getElementById('sw').classList.toggle('on', isCurrent);
-  document.getElementById('end-picker').classList.toggle('disabled', isCurrent);
-  if (isCurrent) setDate('f-e', '');
+  document.getElementById('f-end').disabled       = isCurrent;
+  document.getElementById('end-fg').style.opacity = isCurrent ? '0.4' : '1';
+  if (isCurrent) document.getElementById('f-end').value = '';
 }
 
 function saveCompany() {
   const name  = document.getElementById('f-name').value.trim();
   const role  = document.getElementById('f-role').value.trim();
-  const start = getDate('f-s');
-  const end   = getDate('f-e');
+  const start = document.getElementById('f-start').value;
+  const end   = document.getElementById('f-end').value;
 
   if (!name)  { toast('Please enter a company name', true); return; }
   if (!start) { toast('Please select a start date', true); return; }
@@ -541,15 +527,18 @@ function saveCompany() {
     companies.push({ id: Date.now().toString(), ...entry });
     toast('Company added ✓');
   }
-  localStorage.setItem('exp2', JSON.stringify(companies));
-  closeModal(); renderAll();
+  localStorage.setItem('exp3', JSON.stringify(companies));
+  closeModal();
+  openSecs.add('history');
+  renderAll();
 }
 
 function delCo(id) {
   if (!confirm('Remove this company?')) return;
   companies = companies.filter(x => x.id !== id);
-  localStorage.setItem('exp2', JSON.stringify(companies));
-  renderAll(); toast('Removed');
+  localStorage.setItem('exp3', JSON.stringify(companies));
+  renderAll();
+  toast('Removed');
 }
 
 // ── THEME ─────────────────────────────────────────────────────────────────
@@ -575,7 +564,6 @@ function toast(msg, err=false) {
 }
 
 // ── INIT ──────────────────────────────────────────────────────────────────
-initPickers();
 initTheme();
 renderAll();
 </script>
