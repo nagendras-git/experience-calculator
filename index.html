@@ -162,12 +162,14 @@
   .overlay {
     position: fixed; inset: 0; background: rgba(0,0,0,0.45);
     z-index: 200; display: none; align-items: flex-end; justify-content: center;
+    padding-bottom: env(safe-area-inset-bottom);
   }
   .overlay.open { display: flex; }
   .modal {
     background: var(--card); border-radius: 24px 24px 0 0;
-    padding: 12px 20px 48px; width: 100%; max-width: 480px;
-    max-height: 92vh; overflow-y: auto;
+    padding: 12px 20px 40px; width: 100%; max-width: 480px;
+    max-height: 85vh; overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
     animation: up 0.3s cubic-bezier(0.32,0.72,0,1);
   }
   @keyframes up { from{transform:translateY(100%)} to{transform:translateY(0)} }
@@ -181,16 +183,25 @@
     font-family: var(--font); color: var(--text1); outline: none; transition: border-color 0.2s;
   }
   .fi:focus { border-color: var(--blue); }
-  /* native date input — clean style */
-  input[type="date"].fi {
-    -webkit-appearance: none; appearance: none;
-    color: var(--text1);
+  .date-row {
+    display: flex; gap: 6px;
+    background: var(--bg); border-radius: 11px;
+    padding: 4px 8px; border: 1.5px solid transparent;
+    transition: border-color 0.2s;
   }
-  input[type="date"].fi::-webkit-calendar-picker-indicator {
-    opacity: 0.5; cursor: pointer;
-    filter: none;
+  .date-row:focus-within { border-color: var(--blue); }
+  .date-row.disabled { opacity: 0.4; pointer-events: none; }
+  .date-row select {
+    background: transparent; border: none; outline: none;
+    font-size: 15px; font-weight: 600; font-family: var(--font);
+    color: var(--text1); cursor: pointer; padding: 10px 4px;
+    -webkit-appearance: none; appearance: none; text-align: center; text-align-last: center;
   }
-  body.dark input[type="date"].fi::-webkit-calendar-picker-indicator { filter: invert(1); }
+  .date-row select.dd { flex: 1; }
+  .date-row select.mm { flex: 1; }
+  .date-row select.yy { flex: 1; }
+  .date-sep { color: var(--div); font-size: 18px; display: flex; align-items: center; }
+  body.dark .date-row select { color: var(--text1); }
 
   .f2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 
@@ -249,14 +260,26 @@
       <label class="fl">Role / Designation</label>
       <input class="fi" id="f-role" placeholder="e.g. Senior Software Engineer"/>
     </div>
-    <div class="f2">
+    <div>
       <div class="fg">
         <label class="fl">Start Date</label>
-        <input class="fi" id="f-start" type="date"/>
+        <div class="date-row" id="start-row">
+          <select class="dd" id="f-sd"></select>
+          <span class="date-sep">·</span>
+          <select class="mm" id="f-sm"></select>
+          <span class="date-sep">·</span>
+          <select class="yy" id="f-sy"></select>
+        </div>
       </div>
       <div class="fg" id="end-fg">
         <label class="fl">End Date</label>
-        <input class="fi" id="f-end" type="date"/>
+        <div class="date-row" id="end-row">
+          <select class="dd" id="f-ed"></select>
+          <span class="date-sep">·</span>
+          <select class="mm" id="f-em"></select>
+          <span class="date-sep">·</span>
+          <select class="yy" id="f-ey"></select>
+        </div>
       </div>
     </div>
     <div class="toggle-row" onclick="toggleCurrent()">
@@ -274,6 +297,70 @@
 
 <script>
 const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+function daysInMonth(m, y) { return m && y ? new Date(y, m, 0).getDate() : 31; }
+
+function buildSel(id, opts, val) {
+  const s = document.getElementById(id);
+  const prev = val || s.value;
+  s.innerHTML = opts;
+  if (prev) s.value = prev;
+}
+
+function buildDD(id, m, y, val) {
+  const max = daysInMonth(m, y);
+  let o = '<option value="">Day</option>';
+  for (let i = 1; i <= max; i++) o += `<option value="${i}">${i}</option>`;
+  buildSel(id, o, val);
+}
+function buildMM(id, val) {
+  let o = '<option value="">Month</option>';
+  MONTHS.forEach((m,i) => o += `<option value="${i+1}">${m}</option>`);
+  buildSel(id, o, val);
+}
+function buildYY(id, val) {
+  const now = new Date().getFullYear();
+  let o = '<option value="">Year</option>';
+  for (let y = now; y >= 1980; y--) o += `<option value="${y}">${y}</option>`;
+  buildSel(id, o, val);
+}
+
+function initPickers() {
+  ['f-sd','f-ed'].forEach(id => buildDD(id, '', '', ''));
+  ['f-sm','f-em'].forEach(id => buildMM(id, ''));
+  ['f-sy','f-ey'].forEach(id => buildYY(id, ''));
+  // Refresh days when month/year changes
+  ['f-sm','f-sy'].forEach(id => document.getElementById(id).addEventListener('change', () => {
+    buildDD('f-sd', document.getElementById('f-sm').value, document.getElementById('f-sy').value, document.getElementById('f-sd').value);
+  }));
+  ['f-em','f-ey'].forEach(id => document.getElementById(id).addEventListener('change', () => {
+    buildDD('f-ed', document.getElementById('f-em').value, document.getElementById('f-ey').value, document.getElementById('f-ed').value);
+  }));
+}
+
+function setDatePicker(prefix, dateStr) {
+  if (dateStr) {
+    const [y, m, d] = dateStr.split('-').map(Number);
+    buildDD(`${prefix}d`, m, y, d);
+    buildMM(`${prefix}m`, m);
+    buildYY(`${prefix}y`, y);
+    document.getElementById(`${prefix}d`).value = d;
+    document.getElementById(`${prefix}m`).value = m;
+    document.getElementById(`${prefix}y`).value = y;
+  } else {
+    buildDD(`${prefix}d`, '', '', '');
+    buildMM(`${prefix}m`, '');
+    buildYY(`${prefix}y`, '');
+  }
+}
+
+function getDatePicker(prefix) {
+  const d = document.getElementById(`${prefix}d`).value;
+  const m = document.getElementById(`${prefix}m`).value;
+  const y = document.getElementById(`${prefix}y`).value;
+  if (!d || !m || !y) return '';
+  return `${y}-${String(m).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+}
 
 let companies  = JSON.parse(localStorage.getItem('exp3') || '[]');
 let openSecs   = new Set(['summary','history']);
@@ -465,12 +552,11 @@ function renderAll() {
 function openAdd() {
   editingId = null; isCurrent = false;
   document.getElementById('m-title').textContent = 'Add Company';
-  document.getElementById('f-name').value  = '';
-  document.getElementById('f-role').value  = '';
-  document.getElementById('f-start').value = '';
-  document.getElementById('f-end').value   = '';
-  document.getElementById('f-end').disabled = false;
-  document.getElementById('end-fg').style.opacity = '1';
+  document.getElementById('f-name').value = '';
+  document.getElementById('f-role').value = '';
+  setDatePicker('f-s', '');
+  setDatePicker('f-e', '');
+  document.getElementById('end-row').classList.remove('disabled');
   document.getElementById('sw').classList.remove('on');
   document.getElementById('m-co').classList.add('open');
   document.body.style.overflow = 'hidden';
@@ -482,12 +568,11 @@ function openEdit(id) {
   if (!c) return;
   isCurrent = c.current || false;
   document.getElementById('m-title').textContent    = 'Edit Company';
-  document.getElementById('f-name').value           = c.name;
-  document.getElementById('f-role').value           = c.role || '';
-  document.getElementById('f-start').value          = c.start;
-  document.getElementById('f-end').value            = c.end || '';
-  document.getElementById('f-end').disabled         = isCurrent;
-  document.getElementById('end-fg').style.opacity   = isCurrent ? '0.4' : '1';
+  document.getElementById('f-name').value = c.name;
+  document.getElementById('f-role').value = c.role || '';
+  setDatePicker('f-s', c.start);
+  setDatePicker('f-e', c.end || '');
+  document.getElementById('end-row').classList.toggle('disabled', isCurrent);
   document.getElementById('sw').classList.toggle('on', isCurrent);
   document.getElementById('m-co').classList.add('open');
   document.body.style.overflow = 'hidden';
@@ -502,16 +587,15 @@ function overlayClose(e) { if (e.target === document.getElementById('m-co')) clo
 function toggleCurrent() {
   isCurrent = !isCurrent;
   document.getElementById('sw').classList.toggle('on', isCurrent);
-  document.getElementById('f-end').disabled       = isCurrent;
-  document.getElementById('end-fg').style.opacity = isCurrent ? '0.4' : '1';
-  if (isCurrent) document.getElementById('f-end').value = '';
+  document.getElementById('end-row').classList.toggle('disabled', isCurrent);
+  if (isCurrent) setDatePicker('f-e', '');
 }
 
 function saveCompany() {
   const name  = document.getElementById('f-name').value.trim();
   const role  = document.getElementById('f-role').value.trim();
-  const start = document.getElementById('f-start').value;
-  const end   = document.getElementById('f-end').value;
+  const start = getDatePicker('f-s');
+  const end   = getDatePicker('f-e');
 
   if (!name)  { toast('Please enter a company name', true); return; }
   if (!start) { toast('Please select a start date', true); return; }
@@ -564,6 +648,7 @@ function toast(msg, err=false) {
 }
 
 // ── INIT ──────────────────────────────────────────────────────────────────
+initPickers();
 initTheme();
 renderAll();
 </script>
