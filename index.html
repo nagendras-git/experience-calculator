@@ -302,9 +302,8 @@ function daysInMonth(m, y) { return m && y ? new Date(y, m, 0).getDate() : 31; }
 
 function buildSel(id, opts, val) {
   const s = document.getElementById(id);
-  const prev = val || s.value;
   s.innerHTML = opts;
-  if (prev) s.value = prev;
+  if (val) s.value = val;
 }
 
 function buildDD(id, m, y, val) {
@@ -341,9 +340,9 @@ function initPickers() {
 function setDatePicker(prefix, dateStr) {
   if (dateStr) {
     const [y, m, d] = dateStr.split('-').map(Number);
-    buildDD(`${prefix}d`, m, y, d);
-    buildMM(`${prefix}m`, m);
-    buildYY(`${prefix}y`, y);
+    buildDD(`${prefix}d`, m, y, '');
+    buildMM(`${prefix}m`, '');
+    buildYY(`${prefix}y`, '');
     document.getElementById(`${prefix}d`).value = d;
     document.getElementById(`${prefix}m`).value = m;
     document.getElementById(`${prefix}y`).value = y;
@@ -351,6 +350,10 @@ function setDatePicker(prefix, dateStr) {
     buildDD(`${prefix}d`, '', '', '');
     buildMM(`${prefix}m`, '');
     buildYY(`${prefix}y`, '');
+    // Explicitly force reset to empty
+    document.getElementById(`${prefix}d`).value = '';
+    document.getElementById(`${prefix}m`).value = '';
+    document.getElementById(`${prefix}y`).value = '';
   }
 }
 
