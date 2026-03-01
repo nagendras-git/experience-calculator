@@ -120,10 +120,14 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:
 .sec-wrap{margin-bottom:10px}
 
 /* ─── Home: Hero experience card ─── */
-.exp-hero{padding:20px 18px 18px}
-.exp-lbl{font-size:0.6rem;font-weight:700;color:var(--t3);letter-spacing:.6px;text-transform:uppercase;margin-bottom:6px}
-.exp-val{font-size:2.6rem;font-weight:800;color:var(--green);letter-spacing:-1.5px;line-height:1}
-.exp-sub{font-size:0.72rem;color:var(--t3);margin-top:6px}
+.exp-hero{padding:14px 16px 12px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.exp-hero-left{flex:1;min-width:0}
+.exp-lbl{font-size:0.6rem;font-weight:700;color:var(--t3);letter-spacing:.6px;text-transform:uppercase;margin-bottom:3px}
+.exp-val{font-size:1.85rem;font-weight:800;color:var(--green);letter-spacing:-1px;line-height:1.1}
+.exp-sub{font-size:0.68rem;color:var(--t3);margin-top:3px}
+.exp-hero-badge{background:var(--green-bg);border:1px solid rgba(52,199,89,.22);border-radius:10px;padding:7px 10px;text-align:center;flex-shrink:0}
+.exp-hero-badge-val{font-size:1.35rem;font-weight:800;color:var(--green);letter-spacing:-0.5px;line-height:1}
+.exp-hero-badge-lbl{font-size:0.55rem;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:.4px;margin-top:2px}
 
 /* ─── Stats grid ─── */
 .stat-grid{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--border2)}
@@ -151,7 +155,7 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:
 .tl-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
 .tl-title{font-size:0.7rem;font-weight:700;color:var(--t2);text-transform:uppercase;letter-spacing:.5px}
 .tl-years{font-size:0.65rem;color:var(--t3)}
-.tl-track{height:8px;background:var(--surface3);border-radius:99px;overflow:hidden;position:relative;margin-bottom:12px}
+.tl-track{height:8px;background:var(--surface2);border-radius:99px;overflow:hidden;position:relative;margin-bottom:12px}
 .tl-seg{position:absolute;top:0;height:100%;border-radius:99px}
 .tl-companies{display:flex;flex-direction:column;gap:7px}
 .tl-co-row{display:flex;align-items:center;gap:10px}
@@ -226,20 +230,20 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:
 
 /* ─── Toggle (iOS style) ─── */
 .tog-row{display:flex;align-items:center;gap:12px;padding:10px 0 6px;cursor:pointer}
-.sw{width:51px;height:31px;background:#e5e5ea;border-radius:15.5px;position:relative;transition:background .22s;flex-shrink:0}
-.sw.on{background:var(--blue)}
-[data-theme="light"] .sw{background:#d1d1d6}
-.sw-th{position:absolute;top:2px;left:2px;width:27px;height:27px;background:#fff;border-radius:50%;transition:transform .22s;box-shadow:0 2px 6px rgba(0,0,0,.3)}.sw.on .sw-th{transform:translateX(20px)}
+.sw{width:44px;height:26px;background:var(--surface3);border-radius:13px;position:relative;transition:background .22s;flex-shrink:0;border:1px solid var(--border)}
+.sw.on{background:var(--blue);border-color:var(--blue)}
+[data-theme="light"] .sw{background:#d1d1d6;border-color:transparent}
+.sw-th{position:absolute;top:2px;left:2px;width:22px;height:22px;background:#fff;border-radius:50%;transition:transform .22s;box-shadow:0 2px 5px rgba(0,0,0,.28)}.sw.on .sw-th{transform:translateX(18px)}
 .tog-lbl{font-size:.86rem;font-weight:600;color:var(--t1)}
 
 /* ─── Settings rows ─── */
 .set-row{display:flex;align-items:center;justify-content:space-between;padding:13px 16px;border-bottom:1px solid var(--border2)}
 .set-row:last-child{border-bottom:none}
 /* iOS-style switch in settings */
-.ios-sw{width:51px;height:31px;background:#e5e5ea;border-radius:15.5px;position:relative;transition:background .22s;flex-shrink:0;cursor:pointer}
-.ios-sw.on{background:var(--blue)}
-[data-theme="light"] .ios-sw{background:#d1d1d6}
-.ios-sw-th{position:absolute;top:2px;left:2px;width:27px;height:27px;background:#fff;border-radius:50%;transition:transform .22s;box-shadow:0 2px 6px rgba(0,0,0,.28)}.ios-sw.on .ios-sw-th{transform:translateX(20px)}
+.ios-sw{width:44px;height:26px;background:var(--surface3);border-radius:13px;position:relative;transition:background .22s;flex-shrink:0;cursor:pointer;border:1px solid var(--border)}
+.ios-sw.on{background:var(--blue);border-color:var(--blue)}
+[data-theme="light"] .ios-sw{background:#d1d1d6;border-color:transparent}
+.ios-sw-th{position:absolute;top:2px;left:2px;width:22px;height:22px;background:#fff;border-radius:50%;transition:transform .22s;box-shadow:0 2px 5px rgba(0,0,0,.24)}.ios-sw.on .ios-sw-th{transform:translateX(18px)}
 
 /* ─── Font size buttons (iOS blue active) ─── */
 .fs-btn{padding:8px 4px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;font-size:.75rem;font-weight:700;color:var(--t2);cursor:pointer;font-family:'Inter',sans-serif;transition:all 120ms}
@@ -259,8 +263,8 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:
 .cnf-ok{padding:14px;text-align:center;font-size:.86rem;font-weight:700;cursor:pointer;background:none;border:none;font-family:'Inter',sans-serif}
 
 /* ─── Add row ─── */
-.add-row{display:flex;align-items:center;justify-content:center;gap:6px;padding:13px 16px;cursor:pointer;font-size:.85rem;font-weight:700;color:var(--blue);border:1.5px dashed rgba(0,122,255,.35);border-radius:var(--r-lg);margin-top:8px;transition:all 120ms}
-.add-row:active{background:var(--blue-dim)}
+.add-row{display:flex;align-items:center;justify-content:center;gap:6px;padding:11px 16px;cursor:pointer;font-size:.83rem;font-weight:700;color:var(--blue);border:1.5px solid rgba(0,122,255,.25);border-radius:var(--r-lg);margin-top:8px;transition:all 120ms;background:var(--blue-dim)}
+.add-row:active{background:rgba(0,122,255,.14)}
 
 /* ─── Toast ─── */
 .toast{position:fixed;bottom:calc(20px + var(--safe-b) + var(--nav-h));left:50%;transform:translateX(-50%) translateY(10px);background:var(--surface2);color:var(--t1);border:1px solid var(--border);padding:8px 18px;border-radius:99px;font-size:.79rem;font-weight:600;opacity:0;transition:all .22s var(--ease);z-index:9000;white-space:nowrap}
@@ -354,8 +358,8 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:
         <div class="card" style="margin-top:6px">
           <div class="set-row">
             <div>
-              <div style="font-size:.85rem;font-weight:600;color:var(--t1)">Light Mode</div>
-              <div style="font-size:.68rem;color:var(--t3);margin-top:1px">Toggle light / dark theme</div>
+              <div style="font-size:.85rem;font-weight:600;color:var(--t1)">Dark Mode</div>
+              <div style="font-size:.68rem;color:var(--t3);margin-top:1px">Toggle dark / light theme</div>
             </div>
             <div class="ios-sw" id="theme-sw" onclick="toggleTheme()"><div class="ios-sw-th"></div></div>
           </div>
@@ -616,9 +620,11 @@ function renderHome(){
   html+=`
   <div class="card">
     <div class="exp-hero">
-      <div class="exp-lbl">Total Experience</div>
-      <div class="exp-val">${fmt(totY,totR)}</div>
-      <div class="exp-sub">${totM} months across ${cos.length} compan${cos.length===1?'y':'ies'}</div>
+      <div class="exp-hero-left">
+        <div class="exp-lbl">Total Experience</div>
+        <div class="exp-val">${fmt(totY,totR)}</div>
+        <div class="exp-sub">${totM} months · ${cos.length} compan${cos.length===1?'y':'ies'}</div>
+      </div>
     </div>
     <div class="stat-grid">
       <div class="stat-cell">
@@ -720,7 +726,6 @@ function renderHistory(){
     </div>`;
   }).join('')}</div>
   <div class="add-row" onclick="openAdd()">
-    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
     Add Company
   </div>`;
 }
@@ -961,22 +966,29 @@ function importData(e){
 function toggleTheme(){
   const isL=document.documentElement.getAttribute('data-theme')==='light';
   if(isL){
+    // switching TO dark
     document.documentElement.removeAttribute('data-theme');
     localStorage.setItem('exp_theme','dark');
-    document.getElementById('theme-sw').classList.remove('on');
+    document.getElementById('theme-sw').classList.add('on');
   } else {
+    // switching TO light
     document.documentElement.setAttribute('data-theme','light');
     localStorage.setItem('exp_theme','light');
-    document.getElementById('theme-sw').classList.add('on');
+    document.getElementById('theme-sw').classList.remove('on');
   }
   if(cos.length>1)requestAnimationFrame(buildTimeline);
 }
 function initTheme(){
   const saved=localStorage.getItem('exp_theme');
   const sys=window.matchMedia('(prefers-color-scheme: dark)').matches;
-  if(saved==='light'||(!saved&&!sys)){
-    document.documentElement.setAttribute('data-theme','light');
+  if(saved==='dark'||((!saved)&&sys)){
+    // dark mode active → toggle ON (blue)
+    document.documentElement.removeAttribute('data-theme');
     document.getElementById('theme-sw').classList.add('on');
+  } else {
+    // light mode active → toggle OFF (grey)
+    document.documentElement.setAttribute('data-theme','light');
+    document.getElementById('theme-sw').classList.remove('on');
   }
 }
 
@@ -1005,6 +1017,8 @@ initFontSize();
 initProfile();
 renderAll();
 navigate('home',document.getElementById('tab-home'));
+// Re-apply theme toggle state after full render to ensure DOM sync
+requestAnimationFrame(()=>initTheme());
 
 document.addEventListener('click',e=>{
   if(!e.target.closest('.cal-wrap'))
