@@ -87,7 +87,9 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:
 /* ─── Header ─── */
 .top-hdr{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border2);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);padding-top:calc(var(--safe-t) + 6px)}
 [data-theme="light"] .top-hdr{background:rgba(242,242,247,0.95)}
-.hdr-in{max-width:480px;margin:0 auto;padding:8px 16px 14px}
+.hdr-in{max-width:480px;margin:0 auto;padding:8px 16px 14px;display:flex;align-items:flex-end;justify-content:space-between;gap:12px}
+.hdr-text{flex:1;min-width:0}
+.hdr-action{flex-shrink:0;padding-bottom:2px}
 .hdr-greeting{font-size:0.72rem;color:var(--t3);font-weight:500;margin-bottom:2px}
 .hdr-name{font-size:1.55rem;font-weight:800;color:var(--t1);letter-spacing:-0.6px;line-height:1.15}
 
@@ -190,8 +192,9 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:
 .bic{width:28px;height:28px;border-radius:50%;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--t2);transition:all 120ms}.bic:active{background:var(--surface3);transform:scale(.88)}
 .bicd{width:28px;height:28px;border-radius:50%;background:var(--danger-bg);border:1px solid rgba(255,59,48,.2);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--danger);transition:all 120ms}.bicd:active{transform:scale(.88)}
 
-/* ─── FAB ─── */
-.fab{position:fixed;bottom:calc(var(--nav-h) + var(--safe-b) + 16px);right:18px;width:52px;height:52px;border-radius:50%;background:var(--blue);border:none;color:#fff;cursor:pointer;z-index:190;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(0,122,255,.45);transition:all 120ms var(--spring)}.fab:active{transform:scale(.88)}
+/* ─── Header + button ─── */
+.hdr-add-btn{width:34px;height:34px;border-radius:50%;background:var(--blue);border:none;color:#fff;cursor:pointer;display:none;align-items:center;justify-content:center;box-shadow:0 2px 10px rgba(0,122,255,.4);transition:all 120ms var(--spring);flex-shrink:0}
+.hdr-add-btn:active{transform:scale(.88);opacity:.85}
 
 /* ─── Sheet ─── */
 .s-ov{position:fixed;inset:0;z-index:400;background:var(--scrim);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);display:flex;align-items:flex-end;justify-content:center;opacity:0;pointer-events:none;transition:opacity .22s}
@@ -297,8 +300,17 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:
 <!-- ─── Sticky Header ─── -->
 <div class="top-hdr">
   <div class="hdr-in">
-    <div class="hdr-greeting" id="hdr-greeting">Good morning</div>
-    <div class="hdr-name" id="hdr-name">Experience</div>
+    <div class="hdr-text">
+      <div class="hdr-greeting" id="hdr-greeting">Good morning</div>
+      <div class="hdr-name" id="hdr-name">Experience</div>
+    </div>
+    <div class="hdr-action">
+      <button class="hdr-add-btn" id="fab-btn" onclick="openAdd()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round">
+          <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+        </svg>
+      </button>
+    </div>
   </div>
 </div>
 
@@ -491,12 +503,6 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:
   </div>
 </div>
 
-<!-- ─── FAB ─── -->
-<button class="fab" id="fab-btn" onclick="openAdd()" style="display:none">
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
-    <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
-  </svg>
-</button>
 
 <!-- ─── Tab Bar ─── -->
 <nav class="tab-bar">
