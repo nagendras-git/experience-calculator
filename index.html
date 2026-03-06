@@ -41,9 +41,9 @@
   --border:#4a4a60;
   --border2:#383850;
   --scrim:rgba(0,0,0,0.76);
-  --t1:#f2f2f5;
-  --t2:#a0a0ad;
-  --t3:#606068;
+  --t1:#f5f5f8;
+  --t2:#c8c8d4;
+  --t3:#8e8e9a;
   /* iOS blue */
   --blue:#007AFF;
   --blue-bg:rgba(0,122,255,0.12);
@@ -335,6 +335,98 @@ input[type=range].custom-range::-moz-range-track{background:transparent;height:4
 .color-dot:active{transform:scale(1.1)}
 
 .ver{text-align:center;padding:14px 0 2px;color:var(--t3);font-size:.59rem}
+.section-heading-lbl{font-size:0.6rem;font-weight:700;color:#c0c0cc;letter-spacing:0.4px;text-transform:uppercase;padding:0 2px 6px}
+[data-theme="light"] .section-heading-lbl{color:var(--t3)}
+
+/* ─── Dark mode: boost dim uppercase labels & stat text to match Career Timeline ─── */
+:root .exp-lbl,
+:root .stat-lbl,
+:root .exp-hero-badge-lbl,
+:root .tl-title,
+:root .tl-years {
+  color:#c0c0cc;
+}
+:root .exp-sub,
+:root .stat-sub,
+:root .stat-val,
+:root .kv-l,
+:root .tl-co-name,
+:root .tl-co-dur {
+  color:#d0d0dc;
+}
+:root .role-since,
+:root .co-role-txt,
+:root .co-dates,
+:root .cur-hero-since,
+:root .role-tenure-lbl {
+  color:#b0b0be;
+}
+
+/* ─── Dark mode: History tab – Current Role & company rows ─── */
+:root .cur-hero-ico,
+:root .hist-caret,
+:root .co-chev {
+  color:#c0c0cc;
+  opacity:1;
+}
+:root .hist-sec-title {
+  color:#e8e8f0;
+}
+:root .hist-sec-title svg {
+  opacity:0.7;
+}
+:root .co-name {
+  color:#e8e8f0;
+}
+:root .co-dur {
+  color:#e8e8f0;
+}
+:root .co-role-txt,
+:root .co-dates {
+  color:#b8b8c8;
+}
+
+/* Light theme revert */
+[data-theme="light"] .cur-hero-ico,
+[data-theme="light"] .hist-caret,
+[data-theme="light"] .co-chev {
+  color:var(--t2);
+}
+[data-theme="light"] .co-chev {
+  opacity:0.4;
+}
+[data-theme="light"] .hist-sec-title {
+  color:var(--t1);
+}
+[data-theme="light"] .hist-sec-title svg {
+  opacity:0.45;
+}
+[data-theme="light"] .co-name,
+[data-theme="light"] .co-dur {
+  color:var(--t1);
+}
+
+/* Light theme revert */
+[data-theme="light"] .exp-lbl,
+[data-theme="light"] .stat-lbl,
+[data-theme="light"] .exp-hero-badge-lbl,
+[data-theme="light"] .tl-title,
+[data-theme="light"] .tl-years,
+[data-theme="light"] .exp-sub,
+[data-theme="light"] .stat-sub,
+[data-theme="light"] .kv-l,
+[data-theme="light"] .tl-co-name,
+[data-theme="light"] .tl-co-dur,
+[data-theme="light"] .role-since,
+[data-theme="light"] .co-role-txt,
+[data-theme="light"] .co-dates,
+[data-theme="light"] .cur-hero-since,
+[data-theme="light"] .role-tenure-lbl {
+  color:var(--t3);
+}
+[data-theme="light"] .stat-val {
+  color:var(--t1);
+}
 </style>
 </head>
 <body>
@@ -777,7 +869,7 @@ function renderHistory(){
   let curHtml='';
   if(cur){
     const cd=dur(toISO(cur.start),null);
-    curHtml=`<div style="font-size:0.6rem;font-weight:700;color:var(--t3);letter-spacing:0.4px;text-transform:uppercase;padding:0 2px 6px">Current Role</div><div class="cur-hero" onclick="openEdit('${cur.id}')">
+    curHtml=`<div class="section-heading-lbl">Current Role</div><div class="cur-hero" onclick="openEdit('${cur.id}')">
       <div class="cur-hero-inner">
         <div class="cur-hero-ico">${initials(cur.name)}</div>
         <div class="cur-hero-body">
