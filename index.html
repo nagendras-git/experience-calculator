@@ -173,10 +173,6 @@ body.scroll-locked{overflow:hidden;position:fixed;width:100%;touch-action:none;-
 .kv-v{color:var(--t1);font-weight:700;text-align:right;flex-shrink:0;max-width:60%}
 
 /* ─── Company row (History) ─── */
-.co-row{display:flex;align-items:flex-start;gap:12px;padding:14px 16px;border-bottom:1px solid var(--border2);cursor:pointer;transition:background 120ms}
-.co-row:last-child{border-bottom:none}
-.co-row:active{background:var(--surface2)}
-.co-chev{color:var(--t3);opacity:0.4;flex-shrink:0;display:flex;align-items:center;align-self:center}
 .co-ico{width:38px;height:38px;border-radius:11px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:0.67rem;font-weight:800;background:var(--surface3);border:1px solid var(--border);color:var(--t2)}
 .co-body{flex:1;min-width:0}
 .co-name{font-size:0.9rem;font-weight:700;color:var(--t1)}
@@ -187,8 +183,35 @@ body.scroll-locked{overflow:hidden;position:fixed;width:100%;touch-action:none;-
 .co-acts{display:flex;gap:5px}
 .pres-pill{display:inline-flex;align-items:center;gap:4px;font-size:0.6rem;font-weight:700;color:var(--green);background:var(--green-bg);border:1px solid rgba(52,199,89,.22);border-radius:99px;padding:2px 8px;margin-top:3px}
 .pres-dot{width:5px;height:5px;border-radius:50%;background:var(--green);display:inline-block}
-
-/* ─── Buttons ─── */
+/* ── History: Current role hero ── */
+.cur-hero{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-xl);overflow:hidden;margin-bottom:10px;cursor:pointer;transition:background 120ms}
+.cur-hero:active{background:var(--surface2)}
+.cur-hero-inner{padding:16px 18px;display:flex;align-items:center;gap:14px}
+.cur-hero-ico{width:44px;height:44px;border-radius:13px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:0.78rem;font-weight:800;background:var(--surface3);border:1px solid var(--border);color:var(--t2)}
+.cur-hero-body{flex:1;min-width:0}
+.cur-hero-company{font-size:0.62rem;font-weight:700;color:var(--blue);letter-spacing:.3px;text-transform:uppercase;margin-bottom:3px;display:flex;align-items:center;gap:5px}
+.cur-hero-role{font-size:1.05rem;font-weight:800;color:var(--t1);letter-spacing:-0.3px;margin-bottom:2px}
+.cur-hero-since{font-size:0.68rem;color:var(--t3)}
+.cur-hero-right{flex-shrink:0;text-align:right;display:flex;align-items:center;gap:10px}
+.cur-hero-dur{font-size:1.05rem;font-weight:800;color:var(--green)}
+/* ── History: collapsible section ── */
+.hist-sec-hdr{display:flex;align-items:center;justify-content:space-between;padding:11px 14px;cursor:pointer;user-select:none;background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);margin-bottom:8px;transition:background 120ms}
+.hist-sec-hdr:active{background:var(--surface2)}
+.hist-sec-left{display:flex;align-items:center;gap:9px;min-width:0}
+.hist-sec-title{font-size:0.86rem;font-weight:600;color:var(--t1);display:inline-flex;align-items:center;gap:8px}
+.hist-sec-title svg{opacity:0.45;flex-shrink:0}
+.hist-sec-badge{font-size:0.68rem;font-weight:700;color:var(--blue);background:rgba(0,122,255,0.1);border:1px solid rgba(0,122,255,0.2);padding:2px 8px;border-radius:99px}
+.hist-sec-right{display:flex;align-items:center;gap:8px;flex-shrink:0}
+.hist-sec-body{overflow:hidden;max-height:5000px;transition:max-height 0.32s var(--ease),opacity 0.2s ease;opacity:1}
+.hist-sec-body.closed{max-height:0;opacity:0;pointer-events:none}
+.hist-caret{color:var(--t3);transition:transform 0.25s var(--ease);display:flex;align-items:center}
+.hist-caret svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.hist-caret.open{transform:rotate(180deg)}
+/* ── Chevron for rows ── */
+.co-chev{color:var(--t3);opacity:0.4;flex-shrink:0;display:flex;align-items:center;align-self:center}
+.co-row{display:flex;align-items:flex-start;gap:12px;padding:14px 16px;border-bottom:1px solid var(--border2);cursor:pointer;transition:background 120ms}
+.co-row:last-child{border-bottom:none}
+.co-row:active{background:var(--surface2)}
 .btn{border:none;border-radius:var(--r);padding:12px 20px;font-family:'Inter',sans-serif;font-size:0.87rem;font-weight:600;cursor:pointer;transition:all 120ms}
 .btn-p{background:var(--blue);color:#fff}.btn-p:active{opacity:.82}
 .btn-g{background:var(--surface2);color:var(--t2);border:1px solid var(--border)}.btn-g:active{background:var(--surface3)}
@@ -372,9 +395,9 @@ input[type=range].custom-range::-moz-range-track{background:transparent;height:4
             Appearance
           </span>
         </div>
-        <span class="sec-caret open" id="caret-appearance"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></span>
+        <span class="sec-caret" id="caret-appearance"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></span>
       </div>
-      <div class="sec-body open" id="sec-body-appearance">
+      <div class="sec-body" id="sec-body-appearance">
         <div class="card" style="margin-top:6px">
           <div class="set-row">
             <div>
@@ -420,9 +443,9 @@ input[type=range].custom-range::-moz-range-track{background:transparent;height:4
             Data Tools
           </span>
         </div>
-        <span class="sec-caret open" id="caret-tools"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></span>
+        <span class="sec-caret" id="caret-tools"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></span>
       </div>
-      <div class="sec-body open" id="sec-body-tools">
+      <div class="sec-body" id="sec-body-tools">
         <div class="tools-card">
           <div class="tools-row">
             <div class="tool-btn" onclick="exportData()">
@@ -579,7 +602,7 @@ let cos=JSON.parse(localStorage.getItem(STORE)||'[]');
 let profileName=localStorage.getItem(PROF_KEY)||'';
 let avatarColor=localStorage.getItem(AVATAR_COLOR_KEY)||'#6366f1';
 let editId=null,isCur=false,_cb=null;
-let openSecs=new Set(['appearance','tools']);
+let openSecs=new Set();
 const _c={m:new Date().getMonth(),y:new Date().getFullYear(),sel:null,id:null,vm:'days'};
 
 /* ─── Utilities ─── */
@@ -746,29 +769,66 @@ function renderHistory(){
     </div>`;
     return;
   }
-  const hist=[...cos].sort((a,b)=>toISO(b.start).localeCompare(toISO(a.start)));
-  el.innerHTML=`<div class="card">${hist.map(c=>{
-    const d=dur(toISO(c.start),c.current?null:toISO(c.end||''));
-    return `<div class="co-row" onclick="openEdit('${c.id}')">
-      <div class="co-ico">${initials(c.name)}</div>
-      <div class="co-body">
-        <div class="co-name">${c.name}</div>
-        ${c.role?`<div class="co-role-txt">${c.role}</div>`:''}
-        <div class="co-dates">
-          <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-          ${toDisp(c.start)} → ${c.current?'Present':toDisp(c.end)}
+  const sorted=[...cos].sort((a,b)=>toISO(b.start).localeCompare(toISO(a.start)));
+  const cur=sorted.find(c=>c.current);
+  const past=sorted.filter(c=>!c.current);
+
+  // Current role hero card
+  let curHtml='';
+  if(cur){
+    const cd=dur(toISO(cur.start),null);
+    curHtml=`<div style="font-size:0.6rem;font-weight:700;color:var(--t3);letter-spacing:0.4px;text-transform:uppercase;padding:0 2px 6px">Current Role</div><div class="cur-hero" onclick="openEdit('${cur.id}')">
+      <div class="cur-hero-inner">
+        <div class="cur-hero-ico">${initials(cur.name)}</div>
+        <div class="cur-hero-body">
+          <div class="cur-hero-company"><span class="pres-dot"></span>${cur.name}</div>
+          ${cur.role?`<div class="cur-hero-role">${cur.role}</div>`:''}
+          <div class="cur-hero-since">Since ${toDisp(cur.start)}</div>
         </div>
-        ${c.current?'<div class="pres-pill"><span class="pres-dot"></span>Active</div>':''}
+        <div class="cur-hero-right">
+          <div class="cur-hero-dur">${fmt(cd.years,cd.rem)}</div>
+          <div class="co-chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></div>
+        </div>
       </div>
-      <div class="co-right">
-        <div class="co-dur">${fmt(d.years,d.rem)}</div>
-      </div>
-      <div class="co-chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></div>
     </div>`;
-  }).join('')}</div>
-  <div class="add-row" onclick="openAdd()">
-    Add Company
-  </div>`;
+  } else {
+    curHtml=`<div style="text-align:center;padding:16px;background:var(--surface);border:1px solid var(--border);border-radius:var(--r-xl);margin-bottom:10px">
+      <div style="font-size:0.82rem;color:var(--t3)">No active role</div>
+      <div style="font-size:0.72rem;color:var(--t3);margin-top:3px">Tap + to add your current company</div>
+    </div>`;
+  }
+
+  // Past companies collapsible
+  let pastHtml='';
+  if(past.length){
+    pastHtml=`<div class="hist-sec-hdr" onclick="toggleHistSec()">
+      <div class="hist-sec-left"><span class="hist-sec-title"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8v4l3 3"/><circle cx="12" cy="12" r="10"/></svg> Past Companies</span><span class="hist-sec-badge">${past.length}</span></div>
+      <div class="hist-sec-right"><span class="hist-caret" id="caret-hist-past"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></span></div>
+    </div>
+    <div class="hist-sec-body closed" id="hist-past-body">
+      <div class="card" style="margin-bottom:8px">${past.map(c=>{
+        const d=dur(toISO(c.start),toISO(c.end||''));
+        return `<div class="co-row" onclick="openEdit('${c.id}')">
+          <div class="co-ico">${initials(c.name)}</div>
+          <div class="co-body">
+            <div class="co-name">${c.name}</div>
+            ${c.role?`<div class="co-role-txt">${c.role}</div>`:''}
+            <div class="co-dates">
+              <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              ${toDisp(c.start)} → ${toDisp(c.end)}
+            </div>
+          </div>
+          <div class="co-right">
+            <div class="co-dur">${fmt(d.years,d.rem)}</div>
+          </div>
+          <div class="co-chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></div>
+        </div>`;
+      }).join('')}</div>
+    </div>`;
+  }
+
+  el.innerHTML = curHtml + pastHtml +
+    `<div class="add-row" onclick="openAdd()">Add Company</div>`;
 }
 
 /* ─── Build Timeline ─── */
@@ -935,6 +995,14 @@ function setCalVal(id,dmy){
 }
 
 /* ─── Sheet ─── */
+function toggleHistSec(){
+  const body=document.getElementById('hist-past-body');
+  const caret=document.getElementById('caret-hist-past');
+  if(!body)return;
+  const isOpen=!body.classList.contains('closed');
+  body.classList.toggle('closed',isOpen);
+  if(caret)caret.classList.toggle('open',!isOpen);
+}
 function openAdd(){
   editId=null;isCur=false;
   document.getElementById('s-title').textContent='Add Company';
