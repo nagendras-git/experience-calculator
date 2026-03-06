@@ -173,8 +173,10 @@ body.scroll-locked{overflow:hidden;position:fixed;width:100%;touch-action:none;-
 .kv-v{color:var(--t1);font-weight:700;text-align:right;flex-shrink:0;max-width:60%}
 
 /* ─── Company row (History) ─── */
-.co-row{display:flex;align-items:flex-start;gap:12px;padding:14px 16px;border-bottom:1px solid var(--border2)}
+.co-row{display:flex;align-items:flex-start;gap:12px;padding:14px 16px;border-bottom:1px solid var(--border2);cursor:pointer;transition:background 120ms}
 .co-row:last-child{border-bottom:none}
+.co-row:active{background:var(--surface2)}
+.co-chev{color:var(--t3);opacity:0.4;flex-shrink:0;display:flex;align-items:center;align-self:center}
 .co-ico{width:38px;height:38px;border-radius:11px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:0.67rem;font-weight:800;background:var(--surface3);border:1px solid var(--border);color:var(--t2)}
 .co-body{flex:1;min-width:0}
 .co-name{font-size:0.9rem;font-weight:700;color:var(--t1)}
@@ -513,9 +515,9 @@ input[type=range].custom-range::-moz-range-track{background:transparent;height:4
         <div class="sw" id="sw"><div class="sw-th"></div></div>
         <span class="tog-lbl">Currently working here</span>
       </div>
-      <div class="f-acts">
+      <div class="f-acts" id="f-acts">
         <button class="btn btn-g" onclick="closeSheet()">Cancel</button>
-        <button class="btn btn-p" onclick="saveCompany()">Save</button>
+        <button class="btn btn-p" onclick="saveCompany()">Add</button>
       </div>
     </div>
   </div>
@@ -747,7 +749,7 @@ function renderHistory(){
   const hist=[...cos].sort((a,b)=>toISO(b.start).localeCompare(toISO(a.start)));
   el.innerHTML=`<div class="card">${hist.map(c=>{
     const d=dur(toISO(c.start),c.current?null:toISO(c.end||''));
-    return `<div class="co-row">
+    return `<div class="co-row" onclick="openEdit('${c.id}')">
       <div class="co-ico">${initials(c.name)}</div>
       <div class="co-body">
         <div class="co-name">${c.name}</div>
@@ -760,15 +762,8 @@ function renderHistory(){
       </div>
       <div class="co-right">
         <div class="co-dur">${fmt(d.years,d.rem)}</div>
-        <div class="co-acts">
-          <button class="bic" onclick="openEdit('${c.id}')">
-            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
-          </button>
-          <button class="bicd" onclick="confirmDel('${c.id}','${c.name.replace(/'/g,"\\'")}')">
-            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg>
-          </button>
-        </div>
       </div>
+      <div class="co-chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></div>
     </div>`;
   }).join('')}</div>
   <div class="add-row" onclick="openAdd()">
@@ -948,6 +943,7 @@ function openAdd(){
   document.getElementById('end-fg').style.opacity='1';
   document.getElementById('f-end-d').classList.remove('disabled');
   document.getElementById('sw').classList.remove('on');
+  document.getElementById('f-acts').innerHTML='<button class="btn btn-g" onclick="closeSheet()">Cancel</button><button class="btn btn-p" onclick="saveCompany()">Add</button>';
   document.getElementById('s-ov').classList.add('open');
   document.body.style.overflow='hidden';
   setTimeout(()=>document.getElementById('f-name').focus(),350);
@@ -961,6 +957,7 @@ function openEdit(id){
   document.getElementById('end-fg').style.opacity=isCur?'0.4':'1';
   document.getElementById('f-end-d').classList.toggle('disabled',isCur);
   document.getElementById('sw').classList.toggle('on',isCur);
+  document.getElementById('f-acts').innerHTML='<button class="btn btn-g" style="color:var(--danger)" onclick="confirmDel(\''+id+'\',\''+co.name.replace(/'/g,"\\'")+'\')">Delete</button><button class="btn btn-p" onclick="saveCompany()">Update</button>';
   document.getElementById('s-ov').classList.add('open');
   lockScroll();
 }
@@ -1011,7 +1008,7 @@ function showConfirm(title,sub,lbl,isRed,cb){
   lockScroll();
 }
 function closeConfirm(){document.getElementById('cnf-ov').classList.remove('open');unlockScroll()}
-function confirmDel(id,name){showConfirm('Remove Company?',`"${name}" will be permanently removed.`,'Delete',true,()=>{cos=cos.filter(x=>x.id!==id);save();renderAll();showToast('Removed')})}
+function confirmDel(id,name){showConfirm('Remove Company?',`"${name}" will be permanently removed.`,'Delete',true,()=>{cos=cos.filter(x=>x.id!==id);save();closeSheet();renderAll();showToast('Removed')})}
 function confirmDeleteAll(){showConfirm('Delete All Data?','All records will be permanently removed.','Delete All',true,()=>{cos=[];save();renderAll();showToast('Data cleared')})}
 
 /* ─── Data ─── */
