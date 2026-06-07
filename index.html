@@ -32,60 +32,31 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
 <style>
-/* ─── Base palette (dark) ─── */
 :root{
-  --bg:#0d0d0f;
-  --surface:#141416;
-  --surface2:#1c1c1f;
-  --surface3:#242428;
-  --border:#4a4a60;
-  --border2:#383850;
-  --scrim:rgba(0,0,0,0.76);
-  --t1:#f5f5f8;
-  --t2:#c8c8d4;
-  --t3:#8e8e9a;
-  /* iOS blue */
-  --blue:#007AFF;
-  --blue-bg:rgba(0,122,255,0.12);
-  --blue-dim:rgba(0,122,255,0.08);
-  /* green for experience numbers */
-  --green:#34C759;
-  --green-bg:rgba(52,199,89,0.10);
-  /* danger */
-  --danger:#FF3B30;
-  --danger-bg:rgba(255,59,48,0.08);
-  --nav-h:60px;
-  --safe-b:env(safe-area-inset-bottom,0px);
-  --safe-t:env(safe-area-inset-top,0px);
+  --bg:#0d0d0f;--surface:#141416;--surface2:#1c1c1f;--surface3:#242428;
+  --border:#4a4a60;--border2:#383850;--scrim:rgba(0,0,0,0.76);
+  --t1:#f5f5f8;--t2:#c8c8d4;--t3:#8e8e9a;
+  --blue:#007AFF;--blue-bg:rgba(0,122,255,0.12);--blue-dim:rgba(0,122,255,0.08);
+  --green:#34C759;--green-bg:rgba(52,199,89,0.10);
+  --danger:#FF3B30;--danger-bg:rgba(255,59,48,0.08);
+  --nav-h:60px;--safe-b:env(safe-area-inset-bottom,0px);--safe-t:env(safe-area-inset-top,0px);
   --r:10px;--r-lg:14px;--r-xl:18px;
-  --ease:cubic-bezier(0.16,1,0.3,1);
-  --spring:cubic-bezier(0.34,1.56,0.64,1);
+  --ease:cubic-bezier(0.16,1,0.3,1);--spring:cubic-bezier(0.34,1.56,0.64,1);
 }
-/* ─── Light theme ─── */
 [data-theme="light"]{
-  --bg:#f2f2f7;
-  --surface:#ffffff;
-  --surface2:#e9e9ee;
-  --surface3:#dcdce2;
-  --border:#c8c8d8;
-  --border2:#d8d8e4;
-  --scrim:rgba(0,0,0,0.38);
-  --t1:#111114;
-  --t2:#55555f;
-  --t3:#8e8e98;
+  --bg:#f2f2f7;--surface:#ffffff;--surface2:#e9e9ee;--surface3:#dcdce2;
+  --border:#c8c8d8;--border2:#d8d8e4;--scrim:rgba(0,0,0,0.38);
+  --t1:#111114;--t2:#55555f;--t3:#8e8e98;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 html{height:100%;font-size:16px;background:var(--bg)}
 body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg);color:var(--t1);min-height:100vh;padding-bottom:calc(var(--nav-h) + var(--safe-b) + 4px);-webkit-font-smoothing:antialiased;overflow-x:hidden}
-body.scroll-locked{overflow:hidden;position:fixed;width:100%;touch-action:none;-webkit-overflow-scrolling:auto}
+/* FIX: scroll lock must NOT use position:fixed (causes jump) */
+body.scroll-locked{overflow:hidden;touch-action:none}
 ::-webkit-scrollbar{width:0;height:0}
-
-/* ─── Pages ─── */
 .page{display:none}
 .page.active{display:block;animation:pgIn .18s var(--ease) both}
 @keyframes pgIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
-
-/* ─── Header ─── */
 .top-hdr{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border2);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);padding-top:calc(var(--safe-t) + 6px)}
 [data-theme="light"] .top-hdr{background:rgba(242,242,247,0.95)}
 .hdr-in{max-width:480px;margin:0 auto;padding:8px 16px 14px;display:flex;align-items:flex-end;justify-content:space-between;gap:12px}
@@ -93,8 +64,6 @@ body.scroll-locked{overflow:hidden;position:fixed;width:100%;touch-action:none;-
 .hdr-action{flex-shrink:0;padding-bottom:2px}
 .hdr-greeting{font-size:0.72rem;color:var(--t3);font-weight:500;margin-bottom:2px}
 .hdr-name{font-size:1.55rem;font-weight:800;color:var(--t1);letter-spacing:-0.6px;line-height:1.15}
-
-/* ─── Tab bar ─── */
 .tab-bar{position:fixed;bottom:0;left:0;right:0;z-index:200;background:var(--bg);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-top:1px solid var(--border);height:calc(var(--nav-h) + var(--safe-b));padding-bottom:var(--safe-b);display:flex;align-items:flex-start;justify-content:center;padding-top:8px}
 [data-theme="light"] .tab-bar{background:rgba(242,242,247,0.97)}
 .tab-inner{width:100%;max-width:480px;display:flex;align-items:flex-start;justify-content:space-around}
@@ -103,14 +72,8 @@ body.scroll-locked{overflow:hidden;position:fixed;width:100%;touch-action:none;-
 .tab-ico{height:26px;display:flex;align-items:center;justify-content:center}
 .tab-ico svg{width:1.3rem;height:1.3rem;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
 .tab-lbl{font-size:0.63rem;font-weight:700;letter-spacing:0.2px}
-
-/* ─── Layout ─── */
 .wrap{width:100%;max-width:480px;margin:0 auto;padding:14px 14px 24px}
-
-/* ─── Card ─── */
 .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-xl);overflow:hidden;margin-bottom:10px}
-
-/* ─── Collapsible (settings only) ─── */
 .sec-hdr{display:flex;align-items:center;justify-content:space-between;padding:12px 15px;cursor:pointer;background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);transition:background 120ms;user-select:none;margin-bottom:2px}
 .sec-hdr:active{background:var(--surface2)}
 .sec-hl{display:flex;align-items:center;gap:8px;flex:1}
@@ -121,18 +84,11 @@ body.scroll-locked{overflow:hidden;position:fixed;width:100%;touch-action:none;-
 .sec-body{overflow:hidden;max-height:0;transition:max-height .38s var(--ease)}
 .sec-body.open{max-height:8000px}
 .sec-wrap{margin-bottom:10px}
-
-/* ─── Home: Hero experience card ─── */
 .exp-hero{padding:14px 16px 12px;display:flex;align-items:center;justify-content:space-between;gap:12px}
 .exp-hero-left{flex:1;min-width:0}
 .exp-lbl{font-size:0.6rem;font-weight:700;color:var(--t3);letter-spacing:.6px;text-transform:uppercase;margin-bottom:3px}
 .exp-val{font-size:1.85rem;font-weight:800;color:var(--green);letter-spacing:-1px;line-height:1.1}
 .exp-sub{font-size:0.68rem;color:var(--t3);margin-top:3px}
-.exp-hero-badge{background:var(--green-bg);border:1px solid rgba(52,199,89,.22);border-radius:10px;padding:7px 10px;text-align:center;flex-shrink:0}
-.exp-hero-badge-val{font-size:1.35rem;font-weight:800;color:var(--green);letter-spacing:-0.5px;line-height:1}
-.exp-hero-badge-lbl{font-size:0.55rem;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:.4px;margin-top:2px}
-
-/* ─── Stats grid ─── */
 .stat-grid{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--border2)}
 .stat-cell{padding:13px 16px;border-right:1px solid var(--border2);border-bottom:1px solid var(--border2)}
 .stat-cell:nth-child(even){border-right:none}
@@ -140,8 +96,6 @@ body.scroll-locked{overflow:hidden;position:fixed;width:100%;touch-action:none;-
 .stat-lbl{font-size:0.57rem;color:var(--t3);font-weight:700;letter-spacing:.45px;text-transform:uppercase;margin-bottom:4px}
 .stat-val{font-size:0.92rem;font-weight:800;color:var(--t1)}
 .stat-sub{font-size:0.65rem;color:var(--t3);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-
-/* ─── Current role spotlight card ─── */
 .role-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-xl);overflow:hidden;margin-bottom:10px}
 .role-inner{padding:16px 18px}
 .role-company{font-size:0.68rem;font-weight:700;color:var(--blue);letter-spacing:.3px;text-transform:uppercase;margin-bottom:4px;display:flex;align-items:center;gap:5px}
@@ -152,8 +106,6 @@ body.scroll-locked{overflow:hidden;position:fixed;width:100%;touch-action:none;-
 .role-tenure{display:inline-flex;align-items:center;gap:6px;background:var(--green-bg);border:1px solid rgba(52,199,89,.22);border-radius:99px;padding:4px 12px}
 .role-tenure-val{font-size:0.82rem;font-weight:800;color:var(--green)}
 .role-tenure-lbl{font-size:0.7rem;color:var(--t3)}
-
-/* ─── Timeline card ─── */
 .tl-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-xl);overflow:hidden;margin-bottom:10px;padding:16px 16px 14px}
 .tl-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
 .tl-title{font-size:0.7rem;font-weight:700;color:var(--t2);text-transform:uppercase;letter-spacing:.5px}
@@ -165,14 +117,10 @@ body.scroll-locked{overflow:hidden;position:fixed;width:100%;touch-action:none;-
 .tl-co-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
 .tl-co-name{font-size:0.75rem;font-weight:600;color:var(--t2);flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .tl-co-dur{font-size:0.72rem;font-weight:700;color:var(--t3)}
-
-/* ─── KV rows ─── */
 .kv-row{display:flex;align-items:center;justify-content:space-between;padding:11px 16px;border-bottom:1px solid var(--border2);font-size:0.83rem}
 .kv-row:last-child{border-bottom:none}
 .kv-l{color:var(--t3);font-weight:500}
 .kv-v{color:var(--t1);font-weight:700;text-align:right;flex-shrink:0;max-width:60%}
-
-/* ─── Company row (History) ─── */
 .co-ico{width:38px;height:38px;border-radius:11px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:0.67rem;font-weight:800;background:var(--surface3);border:1px solid var(--border);color:var(--t2)}
 .co-body{flex:1;min-width:0}
 .co-name{font-size:0.9rem;font-weight:700;color:var(--t1)}
@@ -180,10 +128,7 @@ body.scroll-locked{overflow:hidden;position:fixed;width:100%;touch-action:none;-
 .co-dates{font-size:0.66rem;color:var(--t3);margin-top:4px;display:flex;align-items:center;gap:4px}
 .co-right{text-align:right;flex-shrink:0;display:flex;flex-direction:column;align-items:flex-end;gap:6px}
 .co-dur{font-size:0.87rem;font-weight:800;color:var(--t1)}
-.co-acts{display:flex;gap:5px}
-.pres-pill{display:inline-flex;align-items:center;gap:4px;font-size:0.6rem;font-weight:700;color:var(--green);background:var(--green-bg);border:1px solid rgba(52,199,89,.22);border-radius:99px;padding:2px 8px;margin-top:3px}
 .pres-dot{width:5px;height:5px;border-radius:50%;background:var(--green);display:inline-block}
-/* ── History: Current role hero ── */
 .cur-hero{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-xl);overflow:hidden;margin-bottom:10px;cursor:pointer;transition:background 120ms}
 .cur-hero:active{background:var(--surface2)}
 .cur-hero-inner{padding:16px 18px;display:flex;align-items:center;gap:14px}
@@ -194,7 +139,6 @@ body.scroll-locked{overflow:hidden;position:fixed;width:100%;touch-action:none;-
 .cur-hero-since{font-size:0.68rem;color:var(--t3)}
 .cur-hero-right{flex-shrink:0;text-align:right;display:flex;align-items:center;gap:10px}
 .cur-hero-dur{font-size:1.05rem;font-weight:800;color:var(--green)}
-/* ── History: collapsible section ── */
 .hist-sec-hdr{display:flex;align-items:center;justify-content:space-between;padding:11px 14px;cursor:pointer;user-select:none;background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);margin-bottom:8px;transition:background 120ms}
 .hist-sec-hdr:active{background:var(--surface2)}
 .hist-sec-left{display:flex;align-items:center;gap:9px;min-width:0}
@@ -207,7 +151,6 @@ body.scroll-locked{overflow:hidden;position:fixed;width:100%;touch-action:none;-
 .hist-caret{color:var(--t3);transition:transform 0.25s var(--ease);display:flex;align-items:center}
 .hist-caret svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
 .hist-caret.open{transform:rotate(180deg)}
-/* ── Chevron for rows ── */
 .co-chev{color:var(--t3);opacity:0.4;flex-shrink:0;display:flex;align-items:center;align-self:center}
 .co-row{display:flex;align-items:flex-start;gap:12px;padding:14px 16px;border-bottom:1px solid var(--border2);cursor:pointer;transition:background 120ms}
 .co-row:last-child{border-bottom:none}
@@ -215,14 +158,10 @@ body.scroll-locked{overflow:hidden;position:fixed;width:100%;touch-action:none;-
 .btn{border:none;border-radius:var(--r);padding:12px 20px;font-family:'Inter',sans-serif;font-size:0.87rem;font-weight:600;cursor:pointer;transition:all 120ms}
 .btn-p{background:var(--blue);color:#fff}.btn-p:active{opacity:.82}
 .btn-g{background:var(--surface2);color:var(--t2);border:1px solid var(--border)}.btn-g:active{background:var(--surface3)}
-.bic{width:28px;height:28px;border-radius:50%;background:var(--blue-bg);border:1px solid rgba(0,122,255,.2);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--blue);transition:all 120ms}.bic:active{background:var(--blue-dim);transform:scale(.88)}
-.bicd{width:28px;height:28px;border-radius:50%;background:var(--danger-bg);border:1px solid rgba(255,59,48,.2);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--danger);transition:all 120ms}.bicd:active{transform:scale(.88)}
-
-/* ─── Header + button ─── */
-.hdr-add-btn{width:34px;height:34px;border-radius:50%;background:var(--blue);border:none;color:#fff;cursor:pointer;display:none;align-items:center;justify-content:center;box-shadow:0 2px 10px rgba(0,122,255,.4);transition:all 120ms var(--spring);flex-shrink:0}
+/* FAB: shown on Home + History, hidden on Settings */
+.hdr-add-btn{width:34px;height:34px;border-radius:50%;background:var(--blue);border:none;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 10px rgba(0,122,255,.4);transition:all 120ms var(--spring);flex-shrink:0}
 .hdr-add-btn:active{transform:scale(.88);opacity:.85}
-
-/* ─── Sheet ─── */
+.hdr-add-btn.hidden{display:none}
 .s-ov{position:fixed;inset:0;z-index:400;background:var(--scrim);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);display:flex;align-items:flex-end;justify-content:center;opacity:0;pointer-events:none;transition:opacity .22s}
 .s-ov.open{opacity:1;pointer-events:all}
 .sheet{background:var(--surface);border-radius:var(--r-xl) var(--r-xl) 0 0;width:100%;max-width:480px;max-height:92vh;overflow-y:auto;-webkit-overflow-scrolling:touch;padding-bottom:calc(24px + var(--safe-b));transform:translateY(100%);transition:transform .32s var(--ease)}
@@ -237,8 +176,6 @@ body.scroll-locked{overflow:hidden;position:fixed;width:100%;touch-action:none;-
 .fi{width:100%;background:var(--surface2);border:1.5px solid var(--border);border-radius:var(--r);padding:11px 13px;font-size:.9rem;font-family:'Inter',sans-serif;color:var(--t1);outline:none;transition:border-color .18s}
 .fi:focus{border-color:var(--blue)}
 .f-acts{display:flex;gap:8px;margin-top:20px}.f-acts .btn{flex:1;padding:13px}
-
-/* ─── Calendar ─── */
 .cal-wrap{position:relative}
 .cal-disp{width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:var(--r);background:var(--surface2);color:var(--t1);font-family:'Inter',sans-serif;font-size:.9rem;font-weight:500;display:flex;align-items:center;justify-content:space-between;cursor:pointer;transition:border-color 150ms;user-select:none}
 .cal-disp.empty{color:var(--t3)}.cal-disp.disabled{opacity:.35;pointer-events:none}
@@ -256,29 +193,20 @@ body.scroll-locked{overflow:hidden;position:fixed;width:100%;touch-action:none;-
 .cal-yi{padding:5px 2px;border-radius:6px;text-align:center;font-size:.74rem;font-weight:600;cursor:pointer;color:var(--t2)}
 .cal-yi:hover{background:var(--surface2)}.cal-yi.sel{background:var(--blue);color:#fff}
 .cal-clear{padding:5px;border-top:1px solid var(--border2);text-align:center;font-size:.7rem;color:var(--t3);cursor:pointer}
-
-/* ─── Toggle (iOS style) ─── */
 .tog-row{display:flex;align-items:center;gap:12px;padding:10px 0 6px;cursor:pointer}
 .sw{width:44px;height:26px;background:var(--surface3);border-radius:13px;position:relative;transition:background .22s;flex-shrink:0;border:1px solid var(--border)}
 .sw.on{background:var(--blue);border-color:var(--blue)}
 [data-theme="light"] .sw{background:#d1d1d6;border-color:transparent}
 .sw-th{position:absolute;top:2px;left:2px;width:22px;height:22px;background:#fff;border-radius:50%;transition:transform .22s;box-shadow:0 2px 5px rgba(0,0,0,.28)}.sw.on .sw-th{transform:translateX(18px)}
 .tog-lbl{font-size:.86rem;font-weight:600;color:var(--t1)}
-
-/* ─── Settings rows ─── */
 .set-row{display:flex;align-items:center;justify-content:space-between;padding:13px 16px;border-bottom:1px solid var(--border2)}
 .set-row:last-child{border-bottom:none}
-/* iOS-style switch in settings */
 .ios-sw{width:44px;height:26px;background:var(--surface3);border-radius:13px;position:relative;transition:background .22s;flex-shrink:0;cursor:pointer;border:1px solid var(--border)}
 .ios-sw.on{background:var(--blue);border-color:var(--blue)}
 [data-theme="light"] .ios-sw{background:#d1d1d6;border-color:transparent}
 .ios-sw-th{position:absolute;top:2px;left:2px;width:22px;height:22px;background:#fff;border-radius:50%;transition:transform .22s;box-shadow:0 2px 5px rgba(0,0,0,.24)}.ios-sw.on .ios-sw-th{transform:translateX(18px)}
-
-/* ─── Font size buttons (iOS blue active) ─── */
 .fs-btn{padding:8px 4px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;font-size:.75rem;font-weight:700;color:var(--t2);cursor:pointer;font-family:'Inter',sans-serif;transition:all 120ms}
 .fs-btn.active{background:var(--blue);color:#fff;border-color:var(--blue)}
-
-/* ─── Custom range slider ─── */
 .range-wrap{position:relative;width:100%;height:22px;display:flex;align-items:center}
 .range-track{position:absolute;left:0;right:0;height:4px;background:var(--surface3);border-radius:99px;top:50%;transform:translateY(-50%)}
 .range-fill{position:absolute;left:0;height:100%;background:var(--blue);border-radius:99px;transition:width .1s}
@@ -288,8 +216,6 @@ input[type=range].custom-range:active::-webkit-slider-thumb{transform:scale(1.15
 input[type=range].custom-range::-moz-range-thumb{width:22px;height:22px;border-radius:50%;background:#fff;border:none;box-shadow:0 1px 6px rgba(0,0,0,.35)}
 input[type=range].custom-range::-webkit-slider-runnable-track{background:transparent;height:4px}
 input[type=range].custom-range::-moz-range-track{background:transparent;height:4px}
-
-/* ─── Confirm ─── */
 .cnf-ov{position:fixed;inset:0;z-index:9999;background:var(--scrim);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:opacity .22s}
 .cnf-ov.open{opacity:1;pointer-events:all}
 .cnf-box{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-xl);width:100%;max-width:288px;overflow:hidden;transform:scale(.92) translateY(8px);transition:transform .28s var(--spring)}
@@ -301,22 +227,14 @@ input[type=range].custom-range::-moz-range-track{background:transparent;height:4
 .cnf-btns{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--border2)}
 .cnf-cancel{padding:14px;text-align:center;font-size:.86rem;font-weight:600;color:var(--t2);cursor:pointer;background:none;border:none;border-right:1px solid var(--border2);font-family:'Inter',sans-serif}
 .cnf-ok{padding:14px;text-align:center;font-size:.86rem;font-weight:700;cursor:pointer;background:none;border:none;font-family:'Inter',sans-serif}
-
-/* ─── Add row ─── */
 .add-row{display:flex;align-items:center;justify-content:center;gap:6px;padding:11px 16px;cursor:pointer;font-size:.83rem;font-weight:700;color:var(--blue);border:1.5px solid rgba(0,122,255,.25);border-radius:var(--r-lg);margin-top:8px;transition:all 120ms;background:var(--blue-dim)}
 .add-row:active{background:rgba(0,122,255,.14)}
-
-/* ─── Toast ─── */
 .toast{position:fixed;bottom:calc(20px + var(--safe-b) + var(--nav-h));left:50%;transform:translateX(-50%) translateY(10px);background:var(--surface2);color:var(--t1);border:1px solid var(--border);padding:8px 18px;border-radius:99px;font-size:.79rem;font-weight:600;opacity:0;transition:all .22s var(--ease);z-index:9000;white-space:nowrap}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}.toast.err{background:var(--danger-bg);color:var(--danger);border-color:rgba(255,59,48,.25)}
-
-/* ─── Empty state ─── */
 .hint-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-xl);padding:30px 18px;text-align:center;margin-bottom:10px}
 .hint-emoji{font-size:2.4rem;margin-bottom:10px}
 .hint-title{font-size:.92rem;font-weight:800;color:var(--t1);margin-bottom:6px}
 .hint-sub{font-size:.78rem;color:var(--t3);line-height:1.65}
-
-/* ─── Data tools ─── */
 .tools-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-xl);overflow:hidden;margin-top:8px}
 .tools-row{display:grid;grid-template-columns:1fr 1px 1fr;border-bottom:1px solid var(--border2)}.tools-row:last-child{border-bottom:none}
 .tool-btn{display:flex;align-items:center;gap:11px;padding:13px 15px;cursor:pointer;transition:background 120ms}.tool-btn:active{background:var(--surface2)}
@@ -325,113 +243,33 @@ input[type=range].custom-range::-moz-range-track{background:transparent;height:4
 .tool-div{background:var(--border2)}
 .tool-title{font-size:.82rem;font-weight:700;color:var(--t1)}
 .tool-sub{font-size:.66rem;color:var(--t3);margin-top:1px}
-
-/* ─── Profile ─── */
-.profile-avatar{width:52px;height:52px;border-radius:50%;background:var(--blue-bg);border:2px solid rgba(0,122,255,.25);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:1.1rem;font-weight:800;color:var(--blue)}
 .hdr-avatar{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:0.82rem;font-weight:800;color:#fff;cursor:pointer;transition:transform 150ms;border:2px solid rgba(255,255,255,0.2)}
 .hdr-avatar:active{transform:scale(0.92)}
 .color-dot{width:40px;height:40px;border-radius:50%;cursor:pointer;transition:transform 150ms,box-shadow 150ms;border:3px solid transparent;box-sizing:border-box}
 .color-dot.sel{border-color:#fff;box-shadow:0 0 0 2px var(--t1)}
 .color-dot:active{transform:scale(1.1)}
-
 .ver{text-align:center;padding:14px 0 2px;color:var(--t3);font-size:.59rem}
 .section-heading-lbl{font-size:0.6rem;font-weight:700;color:#c0c0cc;letter-spacing:0.4px;text-transform:uppercase;padding:0 2px 6px}
 [data-theme="light"] .section-heading-lbl{color:var(--t3)}
-
-/* ─── Dark mode: boost dim uppercase labels & stat text to match Career Timeline ─── */
-:root .exp-lbl,
-:root .stat-lbl,
-:root .exp-hero-badge-lbl,
-:root .tl-title,
-:root .tl-years {
-  color:#c0c0cc;
-}
-:root .exp-sub,
-:root .stat-sub,
-:root .stat-val,
-:root .kv-l,
-:root .tl-co-name,
-:root .tl-co-dur {
-  color:#d0d0dc;
-}
-:root .role-since,
-:root .co-role-txt,
-:root .co-dates,
-:root .cur-hero-since,
-:root .role-tenure-lbl {
-  color:#b0b0be;
-}
-
-/* ─── Dark mode: History tab – Current Role & company rows ─── */
-:root .cur-hero-ico,
-:root .hist-caret,
-:root .co-chev {
-  color:#c0c0cc;
-  opacity:1;
-}
-:root .hist-sec-title {
-  color:#e8e8f0;
-}
-:root .hist-sec-title svg {
-  opacity:0.7;
-}
-:root .co-name {
-  color:#e8e8f0;
-}
-:root .co-dur {
-  color:#e8e8f0;
-}
-:root .co-role-txt,
-:root .co-dates {
-  color:#b8b8c8;
-}
-
-/* Light theme revert */
-[data-theme="light"] .cur-hero-ico,
-[data-theme="light"] .hist-caret,
-[data-theme="light"] .co-chev {
-  color:var(--t2);
-}
-[data-theme="light"] .co-chev {
-  opacity:0.4;
-}
-[data-theme="light"] .hist-sec-title {
-  color:var(--t1);
-}
-[data-theme="light"] .hist-sec-title svg {
-  opacity:0.45;
-}
-[data-theme="light"] .co-name,
-[data-theme="light"] .co-dur {
-  color:var(--t1);
-}
-
-/* Light theme revert */
-[data-theme="light"] .exp-lbl,
-[data-theme="light"] .stat-lbl,
-[data-theme="light"] .exp-hero-badge-lbl,
-[data-theme="light"] .tl-title,
-[data-theme="light"] .tl-years,
-[data-theme="light"] .exp-sub,
-[data-theme="light"] .stat-sub,
-[data-theme="light"] .kv-l,
-[data-theme="light"] .tl-co-name,
-[data-theme="light"] .tl-co-dur,
-[data-theme="light"] .role-since,
-[data-theme="light"] .co-role-txt,
-[data-theme="light"] .co-dates,
-[data-theme="light"] .cur-hero-since,
-[data-theme="light"] .role-tenure-lbl {
-  color:var(--t3);
-}
-[data-theme="light"] .stat-val {
-  color:var(--t1);
-}
+:root .exp-lbl,:root .stat-lbl,:root .tl-title,:root .tl-years{color:#c0c0cc}
+:root .exp-sub,:root .stat-sub,:root .stat-val,:root .kv-l,:root .tl-co-name,:root .tl-co-dur{color:#d0d0dc}
+:root .role-since,:root .co-role-txt,:root .co-dates,:root .cur-hero-since,:root .role-tenure-lbl{color:#b0b0be}
+:root .cur-hero-ico,:root .hist-caret,:root .co-chev{color:#c0c0cc;opacity:1}
+:root .hist-sec-title{color:#e8e8f0}
+:root .hist-sec-title svg{opacity:0.7}
+:root .co-name,:root .co-dur{color:#e8e8f0}
+:root .co-role-txt,:root .co-dates{color:#b8b8c8}
+[data-theme="light"] .cur-hero-ico,[data-theme="light"] .hist-caret,[data-theme="light"] .co-chev{color:var(--t2)}
+[data-theme="light"] .co-chev{opacity:0.4}
+[data-theme="light"] .hist-sec-title{color:var(--t1)}
+[data-theme="light"] .hist-sec-title svg{opacity:0.45}
+[data-theme="light"] .co-name,[data-theme="light"] .co-dur{color:var(--t1)}
+[data-theme="light"] .exp-lbl,[data-theme="light"] .stat-lbl,[data-theme="light"] .tl-title,[data-theme="light"] .tl-years,[data-theme="light"] .exp-sub,[data-theme="light"] .stat-sub,[data-theme="light"] .kv-l,[data-theme="light"] .tl-co-name,[data-theme="light"] .tl-co-dur,[data-theme="light"] .role-since,[data-theme="light"] .co-role-txt,[data-theme="light"] .co-dates,[data-theme="light"] .cur-hero-since,[data-theme="light"] .role-tenure-lbl{color:var(--t3)}
+[data-theme="light"] .stat-val{color:var(--t1)}
 </style>
 </head>
 <body>
 
-<!-- ─── Sticky Header ─── -->
 <div class="top-hdr">
   <div class="hdr-in">
     <div style="display:flex;align-items:center;gap:10px">
@@ -442,7 +280,7 @@ input[type=range].custom-range::-moz-range-track{background:transparent;height:4
       </div>
     </div>
     <div class="hdr-action">
-      <button class="hdr-add-btn" id="fab-btn" onclick="openAdd()">
+      <button class="hdr-add-btn hidden" id="fab-btn" onclick="openAdd()">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round">
           <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
         </svg>
@@ -451,21 +289,11 @@ input[type=range].custom-range::-moz-range-track{background:transparent;height:4
   </div>
 </div>
 
-<!-- ─── Home Page ─── -->
-<div class="page active" id="page-home">
-  <div class="wrap" id="home-cnt"></div>
-</div>
+<div class="page active" id="page-home"><div class="wrap" id="home-cnt"></div></div>
+<div class="page" id="page-history"><div class="wrap" id="hist-cnt"></div></div>
 
-<!-- ─── History Page ─── -->
-<div class="page" id="page-history">
-  <div class="wrap" id="hist-cnt"></div>
-</div>
-
-<!-- ─── Settings Page ─── -->
 <div class="page" id="page-settings">
   <div class="wrap">
-
-    <!-- Profile section -->
     <div class="sec-wrap">
       <div class="sec-hdr" onclick="openProfileSheet()" style="cursor:pointer">
         <div class="sec-hl">
@@ -474,11 +302,11 @@ input[type=range].custom-range::-moz-range-track{background:transparent;height:4
             Profile
           </span>
         </div>
-        <button onclick="event.stopPropagation();openProfileSheet()" style="width:30px;height:30px;border-radius:8px;border:1px solid rgba(0,122,255,0.25);background:rgba(0,122,255,0.08);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#007AFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
+        <button onclick="event.stopPropagation();openProfileSheet()" style="width:30px;height:30px;border-radius:8px;border:1px solid rgba(0,122,255,0.25);background:rgba(0,122,255,0.08);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#007AFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+        </button>
       </div>
     </div>
-
-    <!-- Appearance section -->
     <div class="sec-wrap">
       <div class="sec-hdr" onclick="toggleSec('appearance')">
         <div class="sec-hl">
@@ -492,17 +320,11 @@ input[type=range].custom-range::-moz-range-track{background:transparent;height:4
       <div class="sec-body" id="sec-body-appearance">
         <div class="card" style="margin-top:6px">
           <div class="set-row">
-            <div>
-              <div style="font-size:.85rem;font-weight:600;color:var(--t1)">Dark Mode</div>
-              <div style="font-size:.68rem;color:var(--t3);margin-top:1px">Toggle dark / light theme</div>
-            </div>
+            <div><div style="font-size:.85rem;font-weight:600;color:var(--t1)">Dark Mode</div><div style="font-size:.68rem;color:var(--t3);margin-top:1px">Toggle dark / light theme</div></div>
             <div class="ios-sw" id="theme-sw" onclick="toggleTheme()"><div class="ios-sw-th"></div></div>
           </div>
           <div class="set-row" style="flex-direction:column;align-items:flex-start;gap:10px;border-bottom:none">
-            <div>
-              <div style="font-size:.85rem;font-weight:600;color:var(--t1)">Text Size</div>
-              <div style="font-size:.68rem;color:var(--t3);margin-top:1px">Adjust app font size</div>
-            </div>
+            <div><div style="font-size:.85rem;font-weight:600;color:var(--t1)">Text Size</div><div style="font-size:.68rem;color:var(--t3);margin-top:1px">Adjust app font size</div></div>
             <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:6px;width:100%">
               <button onclick="setFontSize(13)" class="fs-btn" data-sz="13">XS</button>
               <button onclick="setFontSize(14)" class="fs-btn" data-sz="14">S</button>
@@ -511,22 +333,13 @@ input[type=range].custom-range::-moz-range-track{background:transparent;height:4
               <button onclick="setFontSize(20)" class="fs-btn" data-sz="20">XL</button>
             </div>
             <div style="width:100%">
-              <div class="range-wrap">
-                <div class="range-track"><div class="range-fill" id="range-fill" style="width:50%"></div></div>
-                <input type="range" class="custom-range" id="font-size-bar" min="0" max="4" step="1" value="2"
-                  oninput="setFontSize([13,14,16,18,20][this.value]);updateRangeFill(this.value)"/>
-              </div>
-              <div style="display:flex;justify-content:space-between;margin-top:4px">
-                <span style="font-size:.58rem;color:var(--t3)">Smaller</span>
-                <span style="font-size:.58rem;color:var(--t3)">Larger</span>
-              </div>
+              <div class="range-wrap"><div class="range-track"><div class="range-fill" id="range-fill" style="width:50%"></div></div><input type="range" class="custom-range" id="font-size-bar" min="0" max="4" step="1" value="2" oninput="setFontSize([13,14,16,18,20][this.value]);updateRangeFill(this.value)"/></div>
+              <div style="display:flex;justify-content:space-between;margin-top:4px"><span style="font-size:.58rem;color:var(--t3)">Smaller</span><span style="font-size:.58rem;color:var(--t3)">Larger</span></div>
             </div>
           </div>
         </div>
       </div>
     </div>
-
-    <!-- Data Tools section -->
     <div class="sec-wrap">
       <div class="sec-hdr" onclick="toggleSec('tools')">
         <div class="sec-hl">
@@ -540,37 +353,24 @@ input[type=range].custom-range::-moz-range-track{background:transparent;height:4
       <div class="sec-body" id="sec-body-tools">
         <div class="tools-card">
           <div class="tools-row">
-            <div class="tool-btn" onclick="exportData()">
-              <div class="tool-ico"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg></div>
-              <div><div class="tool-title">Export</div><div class="tool-sub">Download JSON</div></div>
-            </div>
+            <div class="tool-btn" onclick="exportData()"><div class="tool-ico"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg></div><div><div class="tool-title">Export</div><div class="tool-sub">Download JSON</div></div></div>
             <div class="tool-div"></div>
-            <div class="tool-btn" onclick="document.getElementById('imp-file').click()">
-              <div class="tool-ico"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></div>
-              <div><div class="tool-title">Import</div><div class="tool-sub">Restore JSON</div></div>
-            </div>
+            <div class="tool-btn" onclick="document.getElementById('imp-file').click()"><div class="tool-ico"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></div><div><div class="tool-title">Import</div><div class="tool-sub">Restore JSON</div></div></div>
           </div>
           <div class="tools-row">
-            <div class="tool-btn" onclick="loadSampleData()">
-              <div class="tool-ico"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div>
-              <div><div class="tool-title">Sample Data</div><div class="tool-sub">Load demo data</div></div>
-            </div>
+            <div class="tool-btn" onclick="loadSampleData()"><div class="tool-ico"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div><div><div class="tool-title">Sample Data</div><div class="tool-sub">Load demo data</div></div></div>
             <div class="tool-div"></div>
-            <div class="tool-btn" onclick="confirmDeleteAll()">
-              <div class="tool-ico" style="color:var(--danger);background:var(--danger-bg);border-color:rgba(255,59,48,.18)"><svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg></div>
-              <div><div class="tool-title" style="color:var(--danger)">Reset All</div><div class="tool-sub">Clear everything</div></div>
-            </div>
+            <div class="tool-btn" onclick="confirmDeleteAll()"><div class="tool-ico" style="color:var(--danger);background:var(--danger-bg);border-color:rgba(255,59,48,.18)"><svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg></div><div><div class="tool-title" style="color:var(--danger)">Reset All</div><div class="tool-sub">Clear everything</div></div></div>
           </div>
         </div>
       </div>
     </div>
-
     <input type="file" id="imp-file" accept=".json" style="display:none" onchange="importData(event)"/>
-    <div class="ver">v2.1 · Data stored on device only 🔒</div>
+    <div class="ver">v2.2 · Data stored on device only 🔒</div>
   </div>
 </div>
 
-<!-- ─── Profile Sheet ─── -->
+<!-- Profile Sheet -->
 <div class="s-ov" id="prof-ov" onclick="if(event.target.id==='prof-ov')closeProfSheet()">
   <div class="sheet">
     <div class="s-handle"></div>
@@ -579,9 +379,7 @@ input[type=range].custom-range::-moz-range-track{background:transparent;height:4
         <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" style="opacity:0.65"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg>
         Profile
       </div>
-      <button class="s-close" onclick="closeProfSheet()">
-        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-      </button>
+      <button class="s-close" onclick="closeProfSheet()"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
     </div>
     <div class="s-body">
       <div class="fg"><label class="fl">Your Name</label><input class="fi" id="prof-name-inp" placeholder="e.g. Nagendra"/></div>
@@ -597,15 +395,13 @@ input[type=range].custom-range::-moz-range-track{background:transparent;height:4
   </div>
 </div>
 
-<!-- ─── Add/Edit Sheet ─── -->
+<!-- Add/Edit Sheet -->
 <div class="s-ov" id="s-ov" onclick="ovClose(event)">
   <div class="sheet">
     <div class="s-handle"></div>
     <div class="s-hdr">
       <div class="s-title" id="s-title">Add Company</div>
-      <button class="s-close" onclick="closeSheet()">
-        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-      </button>
+      <button class="s-close" onclick="closeSheet()"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
     </div>
     <div class="s-body">
       <div class="fg"><label class="fl">Company Name</label><input class="fi" id="f-name" placeholder="e.g. Infosys, Google, TCS"/></div>
@@ -638,14 +434,10 @@ input[type=range].custom-range::-moz-range-track{background:transparent;height:4
   </div>
 </div>
 
-<!-- ─── Confirm Dialog ─── -->
+<!-- Confirm -->
 <div class="cnf-ov" id="cnf-ov">
   <div class="cnf-box">
-    <div class="cnf-iw">
-      <div class="cnf-ico" style="background:var(--danger-bg);color:var(--danger)">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg>
-      </div>
-    </div>
+    <div class="cnf-iw"><div class="cnf-ico" style="background:var(--danger-bg);color:var(--danger)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg></div></div>
     <div class="cnf-title" id="cnf-title">Remove?</div>
     <div class="cnf-sub" id="cnf-sub">This will be permanently removed.</div>
     <div class="cnf-btns">
@@ -655,26 +447,18 @@ input[type=range].custom-range::-moz-range-track{background:transparent;height:4
   </div>
 </div>
 
-
-<!-- ─── Tab Bar ─── -->
 <nav class="tab-bar">
   <div class="tab-inner">
     <button class="tab-it active" id="tab-home" onclick="navigate('home',this)">
-      <span class="tab-ico">
-        <svg viewBox="0 0 24 24"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H5a1 1 0 01-1-1V9.5z"/><polyline points="9 21 9 12 15 12 15 21"/></svg>
-      </span>
+      <span class="tab-ico"><svg viewBox="0 0 24 24"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H5a1 1 0 01-1-1V9.5z"/><polyline points="9 21 9 12 15 12 15 21"/></svg></span>
       <span class="tab-lbl">Home</span>
     </button>
     <button class="tab-it" id="tab-history" onclick="navigate('history',this)">
-      <span class="tab-ico">
-        <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/></svg>
-      </span>
+      <span class="tab-ico"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/></svg></span>
       <span class="tab-lbl">History</span>
     </button>
     <button class="tab-it" id="tab-settings" onclick="navigate('settings',this)">
-      <span class="tab-ico">
-        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
-      </span>
+      <span class="tab-ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg></span>
       <span class="tab-lbl">Settings</span>
     </button>
   </div>
@@ -686,10 +470,7 @@ input[type=range].custom-range::-moz-range-track{background:transparent;height:4
 const ML=['January','February','March','April','May','June','July','August','September','October','November','December'];
 const MS=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 const DAYS=['Su','Mo','Tu','We','Th','Fr','Sa'];
-const STORE='exp_v4';
-const PROF_KEY='exp_profile';
-const AVATAR_COLOR_KEY='exp_avatar_color';
-
+const STORE='exp_v4';const PROF_KEY='exp_profile';const AVATAR_COLOR_KEY='exp_avatar_color';
 let cos=JSON.parse(localStorage.getItem(STORE)||'[]');
 let profileName=localStorage.getItem(PROF_KEY)||'';
 let avatarColor=localStorage.getItem(AVATAR_COLOR_KEY)||'#6366f1';
@@ -697,72 +478,45 @@ let editId=null,isCur=false,_cb=null;
 let openSecs=new Set();
 const _c={m:new Date().getMonth(),y:new Date().getFullYear(),sel:null,id:null,vm:'days'};
 
-/* ─── Utilities ─── */
-let _scrollLockPos=0,_scrollLockCount=0;
-function lockScroll(){if(_scrollLockCount===0){_scrollLockPos=window.scrollY;document.body.classList.add('scroll-locked');document.body.style.top=(-_scrollLockPos)+'px'}_scrollLockCount++}
-function unlockScroll(){_scrollLockCount=Math.max(0,_scrollLockCount-1);if(_scrollLockCount===0){document.body.classList.remove('scroll-locked');document.body.style.top='';window.scrollTo(0,_scrollLockPos)}}
-function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,6)}
+/* FIX 1: scroll lock — no position:fixed, no page jump */
+let _slCount=0;
+function lockScroll(){_slCount++;if(_slCount===1)document.body.classList.add('scroll-locked')}
+function unlockScroll(){_slCount=Math.max(0,_slCount-1);if(_slCount===0)document.body.classList.remove('scroll-locked')}
 
-function dur(s,e){
-  const sd=new Date(s),ed=e?new Date(e):new Date();
-  let m=(ed.getFullYear()-sd.getFullYear())*12+(ed.getMonth()-sd.getMonth());
-  if(ed.getDate()<sd.getDate())m--;
-  if(m<0)m=0;
-  return{months:m,years:Math.floor(m/12),rem:m%12}
-}
+function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,6)}
+function dur(s,e){const sd=new Date(s),ed=e?new Date(e):new Date();let m=(ed.getFullYear()-sd.getFullYear())*12+(ed.getMonth()-sd.getMonth());if(ed.getDate()<sd.getDate())m--;if(m<0)m=0;return{months:m,years:Math.floor(m/12),rem:m%12}}
 function fmt(y,r){if(y===0&&r===0)return'<1m';if(y===0)return r+'m';if(r===0)return y+'y';return y+'y '+r+'m'}
 function toISO(d){if(!d)return'';const[dd,mm,yy]=d.split('-');return`${yy}-${mm}-${dd}`}
 function toDisp(d){if(!d)return'';const[dd,mm,yy]=d.split('-');return`${parseInt(dd)} ${MS[parseInt(mm)-1]} ${yy}`}
 function initials(n){return n.trim().split(/\s+/).slice(0,2).map(w=>w[0]).join('').toUpperCase()}
+function greeting(){const h=new Date().getHours();if(h>=5&&h<12)return'Good morning';if(h>=12&&h<17)return'Good afternoon';if(h>=17&&h<21)return'Good evening';return'Good night'}
 
-/* ─── Greeting logic ─── */
-function greeting(){
-  const h=new Date().getHours();
-  if(h>=5&&h<12)return'Good morning';
-  if(h>=12&&h<17)return'Good afternoon';
-  if(h>=17&&h<21)return'Good evening';
-  return'Good night';
-}
-
+/* FIX 2: FAB shown on home AND history */
 function updateHeader(pg){
-  const greetEl=document.getElementById('hdr-greeting');
-  const nameEl=document.getElementById('hdr-name');
+  const fab=document.getElementById('fab-btn');
+  document.getElementById('hdr-greeting').style.display='block';
   if(pg==='home'){
-    greetEl.style.display='block';
-    greetEl.textContent=profileName?`${greeting()}, ${profileName} 👋`:`${greeting()} 👋`;
-    nameEl.textContent='Career Experience';
+    document.getElementById('hdr-greeting').textContent=profileName?`${greeting()}, ${profileName} \uD83D\uDC4B`:`${greeting()} \uD83D\uDC4B`;
+    document.getElementById('hdr-name').textContent='Career Experience';
+    fab.classList.remove('hidden');
   } else if(pg==='history'){
-    greetEl.style.display='block';
-    greetEl.textContent='Work';
-    nameEl.textContent='History';
+    document.getElementById('hdr-greeting').textContent='Work';
+    document.getElementById('hdr-name').textContent='History';
+    fab.classList.remove('hidden');
   } else {
-    greetEl.style.display='block';
-    greetEl.textContent='Manage';
-    nameEl.textContent='Settings';
+    document.getElementById('hdr-greeting').textContent='Manage';
+    document.getElementById('hdr-name').textContent='Settings';
+    fab.classList.add('hidden');
   }
 }
 
-/* ─── Timeline colors – distinct palette ─── */
 const TL_COLORS=['#007AFF','#34C759','#FF9F0A','#AF52DE','#FF375F','#5AC8FA','#FF6B35','#30B0C7'];
 function tlColor(i){return TL_COLORS[i%TL_COLORS.length]}
-
 const CSVG='<svg class="cal-ico" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>';
 
-/* ══════════════════════════════════════════
-   RENDER HOME
-══════════════════════════════════════════ */
 function renderHome(){
   const el=document.getElementById('home-cnt');
-  if(!cos.length){
-    el.innerHTML=`
-    <div class="hint-card">
-      <div class="hint-emoji">💼</div>
-      <div class="hint-title">Build your career timeline</div>
-      <div class="hint-sub">Go to the History tab to add companies you've worked at — past and present. Your stats will appear here.</div>
-    </div>`;
-    return;
-  }
-
+  if(!cos.length){el.innerHTML='<div class="hint-card"><div class="hint-emoji">\uD83D\uDCBC</div><div class="hint-title">Build your career timeline</div><div class="hint-sub">Tap the + button above to add companies. Your stats will appear here.</div></div>';return}
   const sorted=[...cos].sort((a,b)=>toISO(a.start).localeCompare(toISO(b.start)));
   const durs=sorted.map(c=>dur(toISO(c.start),c.current?null:toISO(c.end||'')));
   const totM=durs.reduce((s,d)=>s+d.months,0);
@@ -771,500 +525,203 @@ function renderHome(){
   const lng=sorted.reduce((b,c,i)=>(!b||durs[i].months>dur(toISO(b.start),b.current?null:toISO(b.end||'')).months)?c:b,null);
   const lngD=lng?dur(toISO(lng.start),lng.current?null:toISO(lng.end||'')):null;
   const avgM=Math.round(totM/cos.length),avgY=Math.floor(avgM/12),avgR=avgM%12;
-
-  /* Start date for earliest job */
-  const earliestDisp=toDisp(sorted[0].start);
-  const latestYear=new Date().getFullYear();
   const firstYear=new Date(toISO(sorted[0].start)).getFullYear();
-
-  let html='';
-
-  /* ── 1. Hero exp card ── */
-  html+=`
-  <div class="card">
-    <div class="exp-hero">
-      <div class="exp-hero-left">
-        <div class="exp-lbl">Total Experience</div>
-        <div class="exp-val">${fmt(totY,totR)}</div>
-        <div class="exp-sub">${totM} months · ${cos.length} compan${cos.length===1?'y':'ies'}</div>
-      </div>
-    </div>
-    <div class="stat-grid">
-      <div class="stat-cell">
-        <div class="stat-lbl">Companies</div>
-        <div class="stat-val">${cos.length}</div>
-        <div class="stat-sub">worked at</div>
-      </div>
-      <div class="stat-cell">
-        <div class="stat-lbl">Avg Tenure</div>
-        <div class="stat-val">${fmt(avgY,avgR)}</div>
-        <div class="stat-sub">per company</div>
-      </div>
-      <div class="stat-cell">
-        <div class="stat-lbl">Longest Stay</div>
-        <div class="stat-val">${lngD?fmt(lngD.years,lngD.rem):'—'}</div>
-        <div class="stat-sub">${lng?lng.name:'—'}</div>
-      </div>
-      <div class="stat-cell">
-        <div class="stat-lbl">Status</div>
-        <div class="stat-val" style="color:${cur?'var(--green)':'var(--t3)'}">${cur?'Active':'Inactive'}</div>
-        <div class="stat-sub">${cur?cur.name:'No current job'}</div>
-      </div>
-    </div>
-  </div>`;
-
-  /* ── 2. Current role spotlight ── */
-  if(cur){
-    const d=dur(toISO(cur.start),null);
-    html+=`
-    <div class="role-card">
-      <div class="role-inner">
-        <div class="role-company"><span class="role-dot"></span>${cur.name}</div>
-        <div class="role-title">${cur.role||'—'}</div>
-        <div class="role-since">Since ${toDisp(cur.start)}</div>
-        <div class="role-tenure">
-          <span class="role-tenure-val">${fmt(d.years,d.rem)}</span>
-          <span class="role-tenure-lbl">in this role</span>
-        </div>
-      </div>
-    </div>`;
-  }
-
-  /* ── 3. Career Timeline card ── */
-  if(cos.length>1){
-    html+=`
-    <div class="tl-card" id="tl-card">
-      <div class="tl-head">
-        <span class="tl-title">Career Timeline</span>
-        <span class="tl-years">${firstYear} – ${latestYear}</span>
-      </div>
-      <div class="tl-track" id="tl-track"></div>
-      <div class="tl-companies" id="tl-companies"></div>
-    </div>`;
-  }
-
+  let html=`<div class="card"><div class="exp-hero"><div class="exp-hero-left"><div class="exp-lbl">Total Experience</div><div class="exp-val">${fmt(totY,totR)}</div><div class="exp-sub">${totM} months \u00B7 ${cos.length} compan${cos.length===1?'y':'ies'}</div></div></div><div class="stat-grid"><div class="stat-cell"><div class="stat-lbl">Companies</div><div class="stat-val">${cos.length}</div><div class="stat-sub">worked at</div></div><div class="stat-cell"><div class="stat-lbl">Avg Tenure</div><div class="stat-val">${fmt(avgY,avgR)}</div><div class="stat-sub">per company</div></div><div class="stat-cell"><div class="stat-lbl">Longest Stay</div><div class="stat-val">${lngD?fmt(lngD.years,lngD.rem):'—'}</div><div class="stat-sub">${lng?lng.name:'—'}</div></div><div class="stat-cell"><div class="stat-lbl">Status</div><div class="stat-val" style="color:${cur?'var(--green)':'var(--t3)'}">${cur?'Active':'Inactive'}</div><div class="stat-sub">${cur?cur.name:'No current job'}</div></div></div></div>`;
+  if(cur){const d=dur(toISO(cur.start),null);html+=`<div class="role-card"><div class="role-inner"><div class="role-company"><span class="role-dot"></span>${cur.name}</div><div class="role-title">${cur.role||'—'}</div><div class="role-since">Since ${toDisp(cur.start)}</div><div class="role-tenure"><span class="role-tenure-val">${fmt(d.years,d.rem)}</span><span class="role-tenure-lbl">in this role</span></div></div></div>`}
+  if(cos.length>1){html+=`<div class="tl-card" id="tl-card"><div class="tl-head"><span class="tl-title">Career Timeline</span><span class="tl-years">${firstYear} – ${new Date().getFullYear()}</span></div><div class="tl-track" id="tl-track"></div><div class="tl-companies" id="tl-companies"></div></div>`}
   el.innerHTML=html;
   if(cos.length>1)requestAnimationFrame(buildTimeline);
 }
 
-/* ══════════════════════════════════════════
-   RENDER HISTORY
-══════════════════════════════════════════ */
 function renderHistory(){
   const el=document.getElementById('hist-cnt');
-  if(!cos.length){
-    el.innerHTML=`
-    <div class="hint-card">
-      <div class="hint-emoji">💼</div>
-      <div class="hint-title">No companies yet</div>
-      <div class="hint-sub">Tap the + button to add your first company and start tracking your experience.</div>
-    </div>`;
-    return;
-  }
+  if(!cos.length){el.innerHTML='<div class="hint-card"><div class="hint-emoji">\uD83D\uDCBC</div><div class="hint-title">No companies yet</div><div class="hint-sub">Tap the + button to add your first company.</div></div>';return}
   const sorted=[...cos].sort((a,b)=>toISO(b.start).localeCompare(toISO(a.start)));
   const cur=sorted.find(c=>c.current);
   const past=sorted.filter(c=>!c.current);
-
-  // Current role hero card
   let curHtml='';
   if(cur){
     const cd=dur(toISO(cur.start),null);
-    curHtml=`<div class="section-heading-lbl">Current Role</div><div class="cur-hero" onclick="openEdit('${cur.id}')">
-      <div class="cur-hero-inner">
-        <div class="cur-hero-ico">${initials(cur.name)}</div>
-        <div class="cur-hero-body">
-          <div class="cur-hero-company"><span class="pres-dot"></span>${cur.name}</div>
-          ${cur.role?`<div class="cur-hero-role">${cur.role}</div>`:''}
-          <div class="cur-hero-since">Since ${toDisp(cur.start)}</div>
-        </div>
-        <div class="cur-hero-right">
-          <div class="cur-hero-dur">${fmt(cd.years,cd.rem)}</div>
-          <div class="co-chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></div>
-        </div>
-      </div>
-    </div>`;
+    curHtml=`<div class="section-heading-lbl">Current Role</div><div class="cur-hero" onclick="openEdit('${cur.id}')"><div class="cur-hero-inner"><div class="cur-hero-ico">${initials(cur.name)}</div><div class="cur-hero-body"><div class="cur-hero-company"><span class="pres-dot"></span>${cur.name}</div>${cur.role?`<div class="cur-hero-role">${cur.role}</div>`:''}<div class="cur-hero-since">Since ${toDisp(cur.start)}</div></div><div class="cur-hero-right"><div class="cur-hero-dur">${fmt(cd.years,cd.rem)}</div><div class="co-chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></div></div></div></div>`;
   } else {
-    curHtml=`<div style="text-align:center;padding:16px;background:var(--surface);border:1px solid var(--border);border-radius:var(--r-xl);margin-bottom:10px">
-      <div style="font-size:0.82rem;color:var(--t3)">No active role</div>
-      <div style="font-size:0.72rem;color:var(--t3);margin-top:3px">Tap + to add your current company</div>
-    </div>`;
+    curHtml=`<div style="text-align:center;padding:16px;background:var(--surface);border:1px solid var(--border);border-radius:var(--r-xl);margin-bottom:10px"><div style="font-size:0.82rem;color:var(--t3)">No active role</div><div style="font-size:0.72rem;color:var(--t3);margin-top:3px">Tap + to add your current company</div></div>`;
   }
-
-  // Past companies collapsible
   let pastHtml='';
   if(past.length){
-    pastHtml=`<div class="hist-sec-hdr" onclick="toggleHistSec()">
-      <div class="hist-sec-left"><span class="hist-sec-title"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8v4l3 3"/><circle cx="12" cy="12" r="10"/></svg> Past Companies</span><span class="hist-sec-badge">${past.length}</span></div>
-      <div class="hist-sec-right"><span class="hist-caret" id="caret-hist-past"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></span></div>
-    </div>
-    <div class="hist-sec-body closed" id="hist-past-body">
-      <div class="card" style="margin-bottom:8px">${past.map(c=>{
-        const d=dur(toISO(c.start),toISO(c.end||''));
-        return `<div class="co-row" onclick="openEdit('${c.id}')">
-          <div class="co-ico">${initials(c.name)}</div>
-          <div class="co-body">
-            <div class="co-name">${c.name}</div>
-            ${c.role?`<div class="co-role-txt">${c.role}</div>`:''}
-            <div class="co-dates">
-              <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-              ${toDisp(c.start)} → ${toDisp(c.end)}
-            </div>
-          </div>
-          <div class="co-right">
-            <div class="co-dur">${fmt(d.years,d.rem)}</div>
-          </div>
-          <div class="co-chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></div>
-        </div>`;
-      }).join('')}</div>
-    </div>`;
+    pastHtml=`<div class="hist-sec-hdr" onclick="toggleHistSec()"><div class="hist-sec-left"><span class="hist-sec-title"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8v4l3 3"/><circle cx="12" cy="12" r="10"/></svg> Past Companies</span><span class="hist-sec-badge">${past.length}</span></div><div class="hist-sec-right"><span class="hist-caret" id="caret-hist-past"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></span></div></div><div class="hist-sec-body closed" id="hist-past-body"><div class="card" style="margin-bottom:8px">${past.map(c=>{const d=dur(toISO(c.start),toISO(c.end||''));return`<div class="co-row" onclick="openEdit('${c.id}')"><div class="co-ico">${initials(c.name)}</div><div class="co-body"><div class="co-name">${c.name}</div>${c.role?`<div class="co-role-txt">${c.role}</div>`:''}<div class="co-dates"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>${toDisp(c.start)} \u2192 ${toDisp(c.end)}</div></div><div class="co-right"><div class="co-dur">${fmt(d.years,d.rem)}</div></div><div class="co-chev"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></div></div>`;}).join('')}</div></div>`;
   }
-
-  el.innerHTML = curHtml + pastHtml +
-    `<div class="add-row" onclick="openAdd()">Add Company</div>`;
+  el.innerHTML=curHtml+pastHtml+`<div class="add-row" onclick="openAdd()">+ Add Company</div>`;
 }
 
-/* ─── Build Timeline ─── */
 function buildTimeline(){
-  const track=document.getElementById('tl-track');
-  const comp=document.getElementById('tl-companies');
+  const track=document.getElementById('tl-track');const comp=document.getElementById('tl-companies');
   if(!track||!comp)return;
   const sorted=[...cos].sort((a,b)=>toISO(a.start).localeCompare(toISO(b.start)));
   const first=new Date(toISO(sorted[0].start)).getTime(),last=Date.now(),span=last-first||1;
-
-  track.innerHTML=sorted.map((c,i)=>{
-    const s=new Date(toISO(c.start)).getTime();
-    const e=c.current?Date.now():(c.end?new Date(toISO(c.end)).getTime():Date.now());
-    const left=((s-first)/span*100).toFixed(1);
-    const width=Math.max(((e-s)/span*100),1.5).toFixed(1);
-    return `<div class="tl-seg" style="left:${left}%;width:${width}%;background:${tlColor(i)}"></div>`;
-  }).join('');
-
-  comp.innerHTML=sorted.map((c,i)=>{
-    const d=dur(toISO(c.start),c.current?null:toISO(c.end||''));
-    return `<div class="tl-co-row">
-      <div class="tl-co-dot" style="background:${tlColor(i)}"></div>
-      <div class="tl-co-name">${c.name}</div>
-      <div class="tl-co-dur">${fmt(d.years,d.rem)}</div>
-    </div>`;
-  }).join('');
+  track.innerHTML=sorted.map((c,i)=>{const s=new Date(toISO(c.start)).getTime();const e=c.current?Date.now():(c.end?new Date(toISO(c.end)).getTime():Date.now());const left=((s-first)/span*100).toFixed(1);const width=Math.max(((e-s)/span*100),1.5).toFixed(1);return`<div class="tl-seg" style="left:${left}%;width:${width}%;background:${tlColor(i)}"></div>`}).join('');
+  comp.innerHTML=sorted.map((c,i)=>{const d=dur(toISO(c.start),c.current?null:toISO(c.end||''));return`<div class="tl-co-row"><div class="tl-co-dot" style="background:${tlColor(i)}"></div><div class="tl-co-name">${c.name}</div><div class="tl-co-dur">${fmt(d.years,d.rem)}</div></div>`}).join('');
 }
 
-function renderAll(){renderHome();renderHistory();}
+function renderAll(){renderHome();renderHistory()}
 
-/* ─── Navigation ─── */
 function navigate(pg,btn){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.tab-it').forEach(t=>t.classList.remove('active'));
   document.getElementById('page-'+pg).classList.add('active');
   if(btn)btn.classList.add('active');
   updateHeader(pg);
-  document.getElementById('fab-btn').style.display=pg==='history'?'flex':'none';
 }
 
-/* ─── Settings collapsibles ─── */
 function toggleSec(id){
-  const body=document.getElementById('sec-body-'+id);
-  const caret=document.getElementById('caret-'+id);
-  if(!body)return;
-  const isOpen=openSecs.has(id);
-  isOpen?openSecs.delete(id):openSecs.add(id);
-  body.classList.toggle('open',!isOpen);
-  if(caret)caret.classList.toggle('open',!isOpen);
+  const body=document.getElementById('sec-body-'+id);const caret=document.getElementById('caret-'+id);if(!body)return;
+  const isOpen=openSecs.has(id);isOpen?openSecs.delete(id):openSecs.add(id);
+  body.classList.toggle('open',!isOpen);if(caret)caret.classList.toggle('open',!isOpen);
 }
 
-/* ─── Profile ─── */
 const AVATAR_COLORS=['#6366f1','#8b5cf6','#ec4899','#f59e0b','#10b981','#3b82f6','#ef4444','#f97316'];
-
 function renderAllAvatars(){
-  const av=document.getElementById('settings-avatar');
-  const hdrAv=document.getElementById('hdr-avatar');
-  const nameDisp=document.getElementById('settings-name-display');
-  const ini=profileName?initials(profileName):'?';
-  if(av){av.textContent=ini;av.style.background=avatarColor;av.style.color='#fff';av.style.border='none';}
-  if(hdrAv){hdrAv.textContent=ini;hdrAv.style.background=avatarColor;}
-  if(nameDisp){nameDisp.textContent=profileName||'Add your name';}
+  const hdrAv=document.getElementById('hdr-avatar');const ini=profileName?initials(profileName):'?';
+  if(hdrAv){hdrAv.textContent=ini;hdrAv.style.background=avatarColor}
 }
-
 function openProfileSheet(){
-  const inp=document.getElementById('prof-name-inp');
-  if(inp)inp.value=profileName;
+  document.getElementById('prof-name-inp').value=profileName;
   const dotsEl=document.getElementById('prof-color-dots');
-  if(dotsEl){
-    dotsEl.innerHTML=AVATAR_COLORS.map(c=>
-      `<div class="color-dot${avatarColor===c?' sel':''}" style="background:${c}" onclick="selectAvatarColor('${c}')"></div>`
-    ).join('');
-  }
-  document.getElementById('prof-ov').classList.add('open');
-  lockScroll();
+  dotsEl.innerHTML=AVATAR_COLORS.map(c=>`<div class="color-dot${avatarColor===c?' sel':''}" style="background:${c}" onclick="selectAvatarColor('${c}')"></div>`).join('');
+  document.getElementById('prof-ov').classList.add('open');lockScroll();
 }
-
-function closeProfSheet(){
-  document.getElementById('prof-ov').classList.remove('open');
-  unlockScroll();
-}
-
-function selectAvatarColor(c){
-  avatarColor=c;
-  document.querySelectorAll('#prof-color-dots .color-dot').forEach(d=>{
-    d.classList.toggle('sel',d.style.background===c);
-  });
-}
-
+function closeProfSheet(){document.getElementById('prof-ov').classList.remove('open');unlockScroll()}
+function selectAvatarColor(c){avatarColor=c;document.querySelectorAll('#prof-color-dots .color-dot').forEach(d=>d.classList.toggle('sel',d.style.background===c))}
 function saveProfile(){
   profileName=(document.getElementById('prof-name-inp').value||'').trim();
-  localStorage.setItem(PROF_KEY,profileName);
-  localStorage.setItem(AVATAR_COLOR_KEY,avatarColor);
+  localStorage.setItem(PROF_KEY,profileName);localStorage.setItem(AVATAR_COLOR_KEY,avatarColor);
   renderAllAvatars();
   const pg=document.querySelector('.page.active')?.id?.replace('page-','');
-  if(pg==='home')updateHeader('home');
-  closeProfSheet();
+  if(pg==='home')updateHeader('home');closeProfSheet();
 }
+function initProfile(){renderAllAvatars()}
 
-function initProfile(){
-  renderAllAvatars();
-}
-
-/* ─── Calendar ─── */
 function toggleCal(id){
   const pop=document.getElementById('cal-popup-'+id);if(!pop)return;
-  const was=pop.style.display!=='none';
-  document.querySelectorAll('.cal-pop').forEach(p=>p.style.display='none');
-  if(was)return;
-  _c.id=id;_c.vm='days';
-  const val=document.getElementById('f-ins-'+id)?.value||'';
-  if(val){const[dd,mm,yy]=val.split('-').map(Number);_c.sel=new Date(yy,mm-1,dd);_c.m=_c.sel.getMonth();_c.y=_c.sel.getFullYear();}
-  else{_c.sel=null;_c.m=new Date().getMonth();_c.y=new Date().getFullYear();}
+  const was=pop.style.display!=='none';document.querySelectorAll('.cal-pop').forEach(p=>p.style.display='none');if(was)return;
+  _c.id=id;_c.vm='days';const val=document.getElementById('f-ins-'+id)?.value||'';
+  if(val){const[dd,mm,yy]=val.split('-').map(Number);_c.sel=new Date(yy,mm-1,dd);_c.m=_c.sel.getMonth();_c.y=_c.sel.getFullYear()}
+  else{_c.sel=null;_c.m=new Date().getMonth();_c.y=new Date().getFullYear()}
   pop.style.display='block';renderCal();
 }
 function renderCal(){
   const pop=document.getElementById('cal-popup-'+_c.id);if(!pop||pop.style.display==='none')return;
-  if(_c.vm==='years'){renderCalYears();return;}
+  if(_c.vm==='years'){renderCalYears();return}
   const today=new Date();today.setHours(0,0,0,0);
   const fd=new Date(_c.y,_c.m,1).getDay(),dim=new Date(_c.y,_c.m+1,0).getDate(),prev=new Date(_c.y,_c.m,0).getDate();
-  let c='';
-  for(let i=fd-1;i>=0;i--)c+=`<div class="cal-day other-month">${prev-i}</div>`;
-  for(let d=1;d<=dim;d++){
-    const t=new Date(_c.y,_c.m,d);
-    const iT=t.getTime()===today.getTime(),iS=_c.sel&&t.getTime()===_c.sel.getTime();
-    c+=`<div class="cal-day${iT?' today':''}${iS?' sel':''}" onclick="event.stopPropagation();calPickDay(${d})">${d}</div>`;
-  }
-  const tr=(fd+dim)%7===0?0:7-(fd+dim)%7;
-  for(let d=1;d<=tr;d++)c+=`<div class="cal-day other-month">${d}</div>`;
+  let c='';for(let i=fd-1;i>=0;i--)c+=`<div class="cal-day other-month">${prev-i}</div>`;
+  for(let d=1;d<=dim;d++){const t=new Date(_c.y,_c.m,d);const iT=t.getTime()===today.getTime(),iS=_c.sel&&t.getTime()===_c.sel.getTime();c+=`<div class="cal-day${iT?' today':''}${iS?' sel':''}" onclick="event.stopPropagation();calPickDay(${d})">${d}</div>`}
+  const tr=(fd+dim)%7===0?0:7-(fd+dim)%7;for(let d=1;d<=tr;d++)c+=`<div class="cal-day other-month">${d}</div>`;
   pop.innerHTML=`<div class="cal-nav"><button class="cal-nb" onclick="event.stopPropagation();calShift(-1,event)">&#8249;</button><div class="cal-ml" onclick="event.stopPropagation();calToggleY()">${ML[_c.m]} ${_c.y} &#9660;</div><button class="cal-nb" onclick="event.stopPropagation();calShift(1,event)">&#8250;</button></div><div class="cal-grid">${DAYS.map(d=>`<div class="cal-dow">${d}</div>`).join('')}${c}</div><div class="cal-clear" onclick="event.stopPropagation();calClear()">Clear date</div>`;
 }
 function renderCalYears(){
   const pop=document.getElementById('cal-popup-'+_c.id);if(!pop)return;
-  const cy=new Date().getFullYear();let h='';
-  for(let y=cy+10;y>=1980;y--)h+=`<div class="cal-yi${y===_c.y?' sel':''}" onclick="event.stopPropagation();calPickY(${y},event)">${y}</div>`;
+  const cy=new Date().getFullYear();let h='';for(let y=cy+10;y>=1980;y--)h+=`<div class="cal-yi${y===_c.y?' sel':''}" onclick="event.stopPropagation();calPickY(${y},event)">${y}</div>`;
   pop.innerHTML=`<div class="cal-nav"><button class="cal-nb" onclick="event.stopPropagation();calToggleY()">&#10005;</button><div class="cal-ml">Select Year</div><div style="width:30px"></div></div><div class="cal-yg">${h}</div>`;
 }
 function calToggleY(){_c.vm=_c.vm==='years'?'days':'years';renderCal()}
 function calShift(d,ev){if(ev)ev.stopPropagation();_c.m+=d;if(_c.m<0){_c.m=11;_c.y--}if(_c.m>11){_c.m=0;_c.y++}renderCal()}
 function calPickY(y,ev){if(ev)ev.stopPropagation();_c.y=y;_c.vm='days';renderCal()}
 function calPickDay(d){
-  _c.sel=new Date(_c.y,_c.m,d);
-  const fmt2=`${String(d).padStart(2,'0')}-${String(_c.m+1).padStart(2,'0')}-${_c.y}`;
-  const h=document.getElementById('f-ins-'+_c.id);
-  const dp=document.getElementById(_c.id==='start'?'f-start-d':'f-end-d');
-  if(h)h.value=fmt2;
-  if(dp){dp.classList.remove('empty');dp.innerHTML=toDisp(fmt2)+' '+CSVG}
+  _c.sel=new Date(_c.y,_c.m,d);const fmt2=`${String(d).padStart(2,'0')}-${String(_c.m+1).padStart(2,'0')}-${_c.y}`;
+  const h=document.getElementById('f-ins-'+_c.id);const dp=document.getElementById(_c.id==='start'?'f-start-d':'f-end-d');
+  if(h)h.value=fmt2;if(dp){dp.classList.remove('empty');dp.innerHTML=toDisp(fmt2)+' '+CSVG}
   document.getElementById('cal-popup-'+_c.id).style.display='none';
 }
 function calClear(){
-  _c.sel=null;
-  const h=document.getElementById('f-ins-'+_c.id);
-  const dp=document.getElementById(_c.id==='start'?'f-start-d':'f-end-d');
-  if(h)h.value='';
-  if(dp){dp.classList.add('empty');dp.innerHTML='Select date '+CSVG}
+  _c.sel=null;const h=document.getElementById('f-ins-'+_c.id);const dp=document.getElementById(_c.id==='start'?'f-start-d':'f-end-d');
+  if(h)h.value='';if(dp){dp.classList.add('empty');dp.innerHTML='Select date '+CSVG}
   document.getElementById('cal-popup-'+_c.id).style.display='none';
 }
 function setCalVal(id,dmy){
-  const h=document.getElementById('f-ins-'+id);
-  const dp=document.getElementById(id==='start'?'f-start-d':'f-end-d');
-  if(!h||!dp)return;
+  const h=document.getElementById('f-ins-'+id);const dp=document.getElementById(id==='start'?'f-start-d':'f-end-d');if(!h||!dp)return;
   if(dmy){h.value=dmy;dp.classList.remove('empty');dp.innerHTML=toDisp(dmy)+' '+CSVG}
   else{h.value='';dp.classList.add('empty');dp.innerHTML='Select date '+CSVG}
 }
 
-/* ─── Sheet ─── */
 function toggleHistSec(){
-  const body=document.getElementById('hist-past-body');
-  const caret=document.getElementById('caret-hist-past');
-  if(!body)return;
-  const isOpen=!body.classList.contains('closed');
-  body.classList.toggle('closed',isOpen);
-  if(caret)caret.classList.toggle('open',!isOpen);
+  const body=document.getElementById('hist-past-body');const caret=document.getElementById('caret-hist-past');if(!body)return;
+  const isOpen=!body.classList.contains('closed');body.classList.toggle('closed',isOpen);if(caret)caret.classList.toggle('open',!isOpen);
 }
+
+/* All sheet functions use lockScroll/unlockScroll consistently */
 function openAdd(){
   editId=null;isCur=false;
   document.getElementById('s-title').textContent='Add Company';
   document.getElementById('f-name').value='';document.getElementById('f-role').value='';
   setCalVal('start','');setCalVal('end','');
-  document.getElementById('end-fg').style.opacity='1';
-  document.getElementById('f-end-d').classList.remove('disabled');
+  document.getElementById('end-fg').style.opacity='1';document.getElementById('f-end-d').classList.remove('disabled');
   document.getElementById('sw').classList.remove('on');
   document.getElementById('f-acts').innerHTML='<button class="btn btn-g" onclick="closeSheet()">Cancel</button><button class="btn btn-p" onclick="saveCompany()">Add</button>';
-  document.getElementById('s-ov').classList.add('open');
-  document.body.style.overflow='hidden';
+  document.getElementById('s-ov').classList.add('open');lockScroll();
   setTimeout(()=>document.getElementById('f-name').focus(),350);
 }
 function openEdit(id){
-  editId=id;const co=cos.find(x=>x.id===id);if(!co)return;
-  isCur=co.current||false;
+  editId=id;const co=cos.find(x=>x.id===id);if(!co)return;isCur=co.current||false;
   document.getElementById('s-title').textContent='Edit Company';
   document.getElementById('f-name').value=co.name;document.getElementById('f-role').value=co.role||'';
   setCalVal('start',co.start||'');setCalVal('end',co.current?'':co.end||'');
-  document.getElementById('end-fg').style.opacity=isCur?'0.4':'1';
-  document.getElementById('f-end-d').classList.toggle('disabled',isCur);
+  document.getElementById('end-fg').style.opacity=isCur?'0.4':'1';document.getElementById('f-end-d').classList.toggle('disabled',isCur);
   document.getElementById('sw').classList.toggle('on',isCur);
   document.getElementById('f-acts').innerHTML='<button class="btn btn-g" style="color:var(--danger)" onclick="confirmDel(\''+id+'\',\''+co.name.replace(/'/g,"\\'")+'\')">Delete</button><button class="btn btn-p" onclick="saveCompany()">Update</button>';
-  document.getElementById('s-ov').classList.add('open');
-  lockScroll();
+  document.getElementById('s-ov').classList.add('open');lockScroll();
 }
-function closeSheet(){
-  document.querySelectorAll('.cal-pop').forEach(p=>p.style.display='none');
-  document.getElementById('s-ov').classList.remove('open');
-  unlockScroll();
-}
+function closeSheet(){document.querySelectorAll('.cal-pop').forEach(p=>p.style.display='none');document.getElementById('s-ov').classList.remove('open');unlockScroll()}
 function ovClose(e){if(e.target.id==='s-ov')closeSheet()}
 function toggleCurrent(){
-  isCur=!isCur;
-  document.getElementById('sw').classList.toggle('on',isCur);
-  document.getElementById('end-fg').style.opacity=isCur?'0.4':'1';
-  document.getElementById('f-end-d').classList.toggle('disabled',isCur);
+  isCur=!isCur;document.getElementById('sw').classList.toggle('on',isCur);
+  document.getElementById('end-fg').style.opacity=isCur?'0.4':'1';document.getElementById('f-end-d').classList.toggle('disabled',isCur);
   if(isCur){setCalVal('end','');document.querySelectorAll('.cal-pop').forEach(p=>p.style.display='none')}
 }
 function saveCompany(){
-  const name=document.getElementById('f-name').value.trim();
-  const role=document.getElementById('f-role').value.trim();
-  const start=document.getElementById('f-ins-start').value;
-  const end=document.getElementById('f-ins-end').value;
-  if(!name){showToast('Enter a company name',true);return}
-  if(!start){showToast('Select a start date',true);return}
+  const name=document.getElementById('f-name').value.trim();const role=document.getElementById('f-role').value.trim();
+  const start=document.getElementById('f-ins-start').value;const end=document.getElementById('f-ins-end').value;
+  if(!name){showToast('Enter a company name',true);return}if(!start){showToast('Select a start date',true);return}
   if(!isCur&&!end){showToast('Select an end date or mark as current',true);return}
   if(!isCur&&end&&toISO(end)<toISO(start)){showToast('End date must be after start date',true);return}
   const entry={name,role,start,end:isCur?null:end,current:isCur};
-  if(editId){
-    const idx=cos.findIndex(x=>x.id===editId);
-    if(idx!==-1)cos[idx]={...cos[idx],...entry};
-    showToast('Updated ✓');
-  } else {
-    cos.push({id:uid(),...entry});
-    showToast('Added ✓');
-  }
+  if(editId){const idx=cos.findIndex(x=>x.id===editId);if(idx!==-1)cos[idx]={...cos[idx],...entry};showToast('Updated \u2713')}
+  else{cos.push({id:uid(),...entry});showToast('Added \u2713')}
   save();closeSheet();renderAll();
 }
-
-/* ─── Confirm ─── */
 function showConfirm(title,sub,lbl,isRed,cb){
-  _cb=cb;
-  document.getElementById('cnf-title').textContent=title;
-  document.getElementById('cnf-sub').textContent=sub;
-  const ok=document.getElementById('cnf-ok');
-  ok.textContent=lbl||'Delete';
-  ok.style.color=isRed?'var(--danger)':'var(--blue)';
-  ok.onclick=()=>{closeConfirm();if(_cb)_cb()};
-  document.getElementById('cnf-ov').classList.add('open');
-  lockScroll();
+  _cb=cb;document.getElementById('cnf-title').textContent=title;document.getElementById('cnf-sub').textContent=sub;
+  const ok=document.getElementById('cnf-ok');ok.textContent=lbl||'Delete';ok.style.color=isRed?'var(--danger)':'var(--blue)';
+  ok.onclick=()=>{closeConfirm();if(_cb)_cb()};document.getElementById('cnf-ov').classList.add('open');lockScroll();
 }
 function closeConfirm(){document.getElementById('cnf-ov').classList.remove('open');unlockScroll()}
 function confirmDel(id,name){showConfirm('Remove Company?',`"${name}" will be permanently removed.`,'Delete',true,()=>{cos=cos.filter(x=>x.id!==id);save();closeSheet();renderAll();showToast('Removed')})}
 function confirmDeleteAll(){showConfirm('Delete All Data?','All records will be permanently removed.','Delete All',true,()=>{cos=[];save();renderAll();showToast('Data cleared')})}
-
-/* ─── Data ─── */
 function loadSampleData(){
   showConfirm('Load Sample Data?','Replaces current data with sample companies.','Load',false,()=>{
-    cos=[
-      {id:uid(),name:'Infosys',role:'Software Engineer',start:'01-07-2017',end:'31-03-2020',current:false},
-      {id:uid(),name:'Wipro Technologies',role:'Senior Software Engineer',start:'15-04-2020',end:'30-11-2022',current:false},
-      {id:uid(),name:'Google',role:'Staff Engineer',start:'01-01-2023',end:null,current:true}
-    ];
-    save();renderAll();showToast('Sample data loaded ✓');
+    cos=[{id:uid(),name:'Infosys',role:'Software Engineer',start:'01-07-2017',end:'31-03-2020',current:false},{id:uid(),name:'Wipro Technologies',role:'Senior Software Engineer',start:'15-04-2020',end:'30-11-2022',current:false},{id:uid(),name:'Google',role:'Staff Engineer',start:'01-01-2023',end:null,current:true}];
+    save();renderAll();showToast('Sample data loaded \u2713');
   });
 }
-function exportData(){
-  const blob=new Blob([JSON.stringify(cos,null,2)],{type:'application/json'});
-  const a=document.createElement('a');
-  a.href=URL.createObjectURL(blob);
-  a.download='experience-'+new Date().toISOString().slice(0,10)+'.json';
-  a.click();showToast('Exported ✓');
-}
-function importData(e){
-  const file=e.target.files[0];if(!file)return;
-  const r=new FileReader();
-  r.onload=ev=>{
-    try{const d=JSON.parse(ev.target.result);if(!Array.isArray(d))throw 0;cos=d;save();renderAll();showToast('Imported ✓')}
-    catch{showToast('Invalid file',true)}
-  };
-  r.readAsText(file);e.target.value='';
-}
-
-/* ─── Theme ─── */
+function exportData(){const blob=new Blob([JSON.stringify(cos,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='experience-'+new Date().toISOString().slice(0,10)+'.json';a.click();showToast('Exported \u2713')}
+function importData(e){const file=e.target.files[0];if(!file)return;const r=new FileReader();r.onload=ev=>{try{const d=JSON.parse(ev.target.result);if(!Array.isArray(d))throw 0;cos=d;save();renderAll();showToast('Imported \u2713')}catch{showToast('Invalid file',true)}};r.readAsText(file);e.target.value=''}
 function toggleTheme(){
   const isL=document.documentElement.getAttribute('data-theme')==='light';
-  if(isL){
-    // switching TO dark
-    document.documentElement.removeAttribute('data-theme');
-    localStorage.setItem('exp_theme','dark');
-    document.getElementById('theme-sw').classList.add('on');
-  } else {
-    // switching TO light
-    document.documentElement.setAttribute('data-theme','light');
-    localStorage.setItem('exp_theme','light');
-    document.getElementById('theme-sw').classList.remove('on');
-  }
+  if(isL){document.documentElement.removeAttribute('data-theme');localStorage.setItem('exp_theme','dark');document.getElementById('theme-sw').classList.add('on')}
+  else{document.documentElement.setAttribute('data-theme','light');localStorage.setItem('exp_theme','light');document.getElementById('theme-sw').classList.remove('on')}
   if(cos.length>1)requestAnimationFrame(buildTimeline);
 }
 function initTheme(){
-  const saved=localStorage.getItem('exp_theme');
-  const sys=window.matchMedia('(prefers-color-scheme: dark)').matches;
-  if(saved==='dark'||((!saved)&&sys)){
-    // dark mode active → toggle ON (blue)
-    document.documentElement.removeAttribute('data-theme');
-    document.getElementById('theme-sw').classList.add('on');
-  } else {
-    // light mode active → toggle OFF (grey)
-    document.documentElement.setAttribute('data-theme','light');
-    document.getElementById('theme-sw').classList.remove('on');
-  }
+  const saved=localStorage.getItem('exp_theme');const sys=window.matchMedia('(prefers-color-scheme: dark)').matches;
+  if(saved==='dark'||((!saved)&&sys)){document.documentElement.removeAttribute('data-theme');document.getElementById('theme-sw').classList.add('on')}
+  else{document.documentElement.setAttribute('data-theme','light');document.getElementById('theme-sw').classList.remove('on')}
 }
-
-/* ─── Font size ─── */
-function updateRangeFill(idx){
-  const fill=document.getElementById('range-fill');
-  if(fill)fill.style.width=(idx/4*100)+'%';
-}
-function setFontSize(px){
-  document.documentElement.style.fontSize=px+'px';
-  localStorage.setItem('exp_fs',px);
-  document.querySelectorAll('.fs-btn').forEach(b=>b.classList.toggle('active',parseInt(b.dataset.sz)===px));
-  const idx=[13,14,16,18,20].indexOf(px);
-  const bar=document.getElementById('font-size-bar');
-  if(bar&&idx!==-1){bar.value=idx;updateRangeFill(idx);}
-}
+function updateRangeFill(idx){const fill=document.getElementById('range-fill');if(fill)fill.style.width=(idx/4*100)+'%'}
+function setFontSize(px){document.documentElement.style.fontSize=px+'px';localStorage.setItem('exp_fs',px);document.querySelectorAll('.fs-btn').forEach(b=>b.classList.toggle('active',parseInt(b.dataset.sz)===px));const idx=[13,14,16,18,20].indexOf(px);const bar=document.getElementById('font-size-bar');if(bar&&idx!==-1){bar.value=idx;updateRangeFill(idx)}}
 function initFontSize(){setFontSize(parseInt(localStorage.getItem('exp_fs'))||16)}
-
 function save(){localStorage.setItem(STORE,JSON.stringify(cos))}
-
-function showToast(msg,err=false){
-  const t=document.getElementById('toast');
-  t.textContent=msg;t.className='toast '+(err?'err ':'')+' show';
-  setTimeout(()=>t.className='toast',2500);
-}
-
-/* ─── Boot ─── */
-initTheme();
-initFontSize();
-initProfile();
-renderAll();
-navigate('home',document.getElementById('tab-home'));
-// Re-apply theme toggle state after full render to ensure DOM sync
-requestAnimationFrame(()=>initTheme());
-
-document.addEventListener('click',e=>{
-  if(!e.target.closest('.cal-wrap'))
-    document.querySelectorAll('.cal-pop').forEach(p=>p.style.display='none');
-});
+function showToast(msg,err=false){const t=document.getElementById('toast');t.textContent=msg;t.className='toast '+(err?'err ':'')+' show';setTimeout(()=>t.className='toast',2500)}
+initTheme();initFontSize();initProfile();renderAll();navigate('home',document.getElementById('tab-home'));
+document.addEventListener('click',e=>{if(!e.target.closest('.cal-wrap'))document.querySelectorAll('.cal-pop').forEach(p=>p.style.display='none')});
 </script>
 </body>
 </html>
